@@ -1,6 +1,6 @@
 @RestResource(urlMapping='/Accounts/*/contacts')
 global class AccountManager {
-    // Adding the Comments
+    // Removing the comments
     @HttpGet
     global static Account getAccount() {
         RestRequest req = RestContext.request;
