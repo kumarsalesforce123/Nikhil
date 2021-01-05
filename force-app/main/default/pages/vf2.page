@@ -1,0 +1,159 @@
+<apex:page Controller="datetimepickercontroller" sidebar="false" id="page">
+    <html>
+        <head>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+            <meta name="robots" content="noindex, nofollow"/>
+            <meta name="googlebot" content="noindex, nofollow"/>
+            
+             <apex:includeScript value="{!URLFOR($Resource.datetimepicker,'datetimepicker/jquery.js')}"/>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+      <!--  <apex:stylesheet value="{!URLFOR($Resource.datetimepicker,'datetimepicker/bootstrap.min.css')}" /> -->
+           
+            <apex:includeScript value="{!URLFOR($Resource.datetimepicker,'datetimepicker/moment-with-locales.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.datetimepicker,'datetimepicker/bootstrap-datetimepicker.js')}"/>  
+
+            <apex:stylesheet value="{!URLFOR($Resource.datetimepicker,'datetimepicker/bootstrap-datetimepicker.css')}" />
+           
+            
+            <script >
+               $(function(){
+                $('#startdatepicker').datetimepicker();
+                });
+                $(function(){
+                $('#enddatepicker').datetimepicker();
+                });
+                
+        function savesubmit()
+        {
+            var sdate=document.getElementById('startdatepicker').value;
+            var edate=document.getElementById('enddatepicker').value;
+            
+            document.getElementById('page:pb:form:pbs:pbsienddate:enddateerror').innerHTML="";
+            if(sdate>edate)
+            {
+                document.getElementById('page:pb:form:pbs:pbsienddate:enddateerror').innerHTML="<span style='color:red;'>Start date is greater than end date</span>";
+                return false;
+            }
+            else
+            {
+                locationparam(sdate,edate);
+            }
+        }        
+    </script>
+        <style>
+          .headertag
+          {
+              display:block;
+              background-color:skyblue;
+              padding:4px;
+          }
+        </style>
+            
+        </head>
+
+        <body>
+             <apex:pageblock id="pb">        
+       <apex:form id="form">
+           <apex:pageblocksection columns="1" id="pbs">
+               <apex:pageblocksectionItem id="pbis">
+                   <apex:outputlabel >Start Date:</apex:outputlabel>
+                   <input type="text" id="startdatepicker"/>
+               </apex:pageblocksectionItem>
+               <apex:pageblocksectionItem id="pbsienddate">
+                   <apex:outputlabel >End Date:</apex:outputlabel>
+                   <apex:outputPanel >
+                   <input type="text" id="enddatepicker"/>
+                   <apex:outputlabel id="enddateerror"></apex:outputlabel>
+                   </apex:outputPanel>
+              </apex:pageblocksectionItem>
+              </apex:pageblocksection><br/>
+                  <apex:commandButton value="Submit" onclick="savesubmit(); return false;" style="margin-left:244px;" rerender="pb1,pb2,pb3"/>
+             <apex:actionfunction name="locationparam" action="{!fetchDetails}" rerender="pb1,pb2,pb3" status="actStatusId">
+                  <apex:param name="sd" value=""/>
+                  <apex:param name="ed" value=""/>         
+             </apex:actionfunction>
+             <apex:actionStatus id="actStatusId" >
+                 <apex:facet name="start" >
+                 <img src="/img/loading.gif" />                    
+                 </apex:facet>
+             </apex:actionStatus>
+             
+             <!--------*******----->
+              <br/><br/>
+        <h3 class="headertag">Audited Items</h3><br/>
+        <apex:pageblocktable value="{!auditedwrap}" var="loc" id="pb1">
+            <Apex:column headervalue="EPC">
+                <apex:outputtext value="{!loc.EPC}"/>
+            </apex:column>
+            <Apex:column headervalue="UPN">
+                <apex:outputtext value="{!loc.UPN}"/>
+            </apex:column>
+            <Apex:column headervalue="Product Description">
+                <apex:outputtext value="{!loc.ProductDescription}"/>
+            </apex:column>
+            <Apex:column headervalue="LOT">
+                <apex:outputtext value="{!loc.lot}"/>
+            </apex:column>           
+            <Apex:column headervalue="Expiry">
+                <apex:outputtext value="{!loc.expiry}"/>
+            </apex:column>
+            <Apex:column headervalue="Scanned Latitude">
+                <apex:outputtext value="{!loc.scannedLat}"/>
+            </apex:column>
+            <Apex:column headervalue="Scanned Longitude">
+                <apex:outputtext value="{!loc.scannedLng}"/>
+            </apex:column>
+            <Apex:column headervalue="Scanned Date/Time">
+                <!--<apex:outputtext value="{!loc.ScannedTime}"/>-->
+                <apex:outputText value="{0,date,MM/dd/YYYY HH:mm}">
+                    <apex:param value="{!loc.ScannedTime}" />
+                </apex:outputText>
+            </apex:column>
+        </apex:pageblocktable><br/>
+        <h3 class="headertag">Missed Items</h3><br/>
+        <apex:pageblocktable value="{!missedwrap}" var="loc" id="pb2">
+          
+            <Apex:column headervalue="UPN">
+                <apex:outputtext value="{!loc.UPN}"/>
+            </apex:column>
+            <Apex:column headervalue="Product Description">
+                <apex:outputtext value="{!loc.ProductDescription}"/>
+            </apex:column>
+            <Apex:column headervalue="LOT">
+                <apex:outputtext value="{!loc.lot}"/>
+            </apex:column>           
+            <Apex:column headervalue="Expiry">
+                <apex:outputtext value="{!loc.expiry}"/>
+            </apex:column>
+             <Apex:column headervalue="EPC">
+                <apex:outputtext value="{!loc.EPC}"/>
+            </apex:column>                 
+            </apex:pageblocktable><br/>
+        <h3 class="headertag">Extraneous Items</h3><br/>
+        <apex:pageblocktable value="{!extrenimouswrap}" var="loc" id="pb3">
+           <Apex:column headervalue="EPC">
+                <apex:outputtext value="{!loc.EPC}"/>
+            </apex:column>
+            <Apex:column headervalue="Scanned Latitude">
+                <apex:outputtext value="{!loc.scannedLat}"/>
+            </apex:column>
+            <Apex:column headervalue="Scanned Longitude">
+                <apex:outputtext value="{!loc.scannedLng}"/>
+            </apex:column>
+            <Apex:column headervalue="Scanned Date/Time">
+                <!--<apex:outputtext value="{!loc.ScannedTime}"/>-->
+                <apex:outputText value="{0,date,MM/dd/YYYY HH:mm}">
+                    <apex:param value="{!loc.ScannedTime}" />
+                </apex:outputText>
+            </apex:column>
+        </apex:pageblocktable> 
+        
+        
+        <!--------------*********------->
+             
+             
+        </apex:form>
+    </apex:pageblock>
+        </body>
+    </html>
+</apex:page>

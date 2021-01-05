@@ -1,0 +1,40 @@
+<apex:page id="thePage" sidebar="false">
+
+ <style>
+    .activeTab {background-color: #B0E2FF; color:black; background-image:none; width:100px;height:30px;}
+    .inactiveTab { background-color: lightgrey; color:black; background-image:none;width:100px;height:30px;}
+    .hdCls{ margin-left: 200px;}
+ </style>
+    <apex:tabPanel switchType="server" selectedTab="name1" id="theTabPanel" tabClass="activeTab" inactiveTabClass="inactiveTab" >
+        <apex:tab label="Commision" name="name1" id="tabOne" style="background:white;">
+            <apex:include pageName="commision"/>
+        </apex:tab>
+        <apex:tab label="Shipping" name="name2" id="tabTwo" >
+            <apex:outputPanel id="op">
+            <c:shipping ></c:shipping>
+            </apex:outputPanel>
+        </apex:tab>
+        <apex:tab label="Cycle Counts" name="name3" id="tabThree" switchType="server">
+        <!-- onTabEnter="window.parent.location.replace('/apex/page2');" --> 
+            <apex:tabPanel switchType="server" selectedTab="name4" id="theTabPanel2" tabClass="activeTab" inactiveTabClass="inactiveTab" >
+            <apex:tab label="Link 1" name="Link 1" id="tab4" style="background:white;">
+                <apex:outputPanel >
+                    <apex:outputtext value="Link 1 page not developed" style="font-weight:bold;"/>
+                </apex:outputPanel>
+            </apex:tab>
+            <apex:tab label="Link 2" name="Link 2" id="tab5" style="background:white;">
+                <apex:outputPanel >
+                    <apex:outputtext value="Link 2 page not developed" style="font-weight:bold;"/>
+                </apex:outputPanel>
+            </apex:tab>
+            <apex:tab label="Link 3" name="Link 3" id="tab6" style="background:white;">
+                 <apex:outputPanel >
+                    <apex:outputtext value="Link 3 page not developed" style="font-weight:bold;"/>
+                </apex:outputPanel>
+            </apex:tab>
+        </apex:tabPanel>
+              
+        </apex:tab>
+    </apex:tabPanel>
+    
+</apex:page>

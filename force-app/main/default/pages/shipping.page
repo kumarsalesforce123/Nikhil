@@ -1,0 +1,108 @@
+<apex:page sidebar="false" controller="shipping" id="page">
+<apex:sectionHeader title="Shipping Process"/>
+<script language="JavaScript1.2" src="/js/functions.js"></script>
+<script src="/soap/ajax/9.0/connection.js" type="text/javascript"></script>
+<script id="clientEventHandlersJS" language="javascript">
+     
+     function disabletext(u)
+     {
+        var a=document.getElementById(u.id).value;
+        if(a=='' || a=='--None--')
+        {
+            document.getElementById('page:form:pb:pbs:pbsi1:textlocation').disabled =false;
+        }
+        else
+        {
+            document.getElementById('page:form:pb:pbs:pbsi1:textlocation').disabled =true;
+        }
+     }
+     function savesubmit()
+     {
+         sforce.connection.sessionId = '{!$Api.Session_ID}';  
+         var epc=document.getElementById('page:form:pb:pbs:pbsi:epc').value;
+         var location=document.getElementById('page:form:pb:pbs:pickpbs:pickselect').value;
+         var locationid=document.getElementById('page:form:pb:pbs:pbsi1:textlocation').value;
+         
+         document.getElementById('page:form:pb:pbs:pbsi:epcerror').innerHTML="";
+         document.getElementById('page:form:pb:pbs:pickpbs:locationerror').innerHTML="";
+         if(epc=='')
+         {
+             document.getElementById('page:form:pb:pbs:pbsi:epcerror').innerHTML="<span style='color:red;'>EPC is required</span>";
+             return false;
+         }
+             else if(location=='' && locationid=='')
+         {    
+             document.getElementById('page:form:pb:pbs:pickpbs:locationerror').innerHTML="<span style='color:red;'>Location or locationid  is required</span>";
+             return false;
+         } 
+         
+         var qr = sforce.connection.query("SELECT id,name,Shipping__c FROM Inventory__c where EPC__c = '"+epc+"'");
+         var records = qr.getArray("records");
+         if (records.length > 0)
+         {
+             for(var i=0;i<records.length;i++)
+             {
+                 if(records[i].Shipping__c!=null)
+                 {
+                     var s=confirm("Product Already shipped. do you want again?");
+                     if (s==true)
+                     {
+                         return true;
+                        
+                     }
+                     else
+                     {
+                         return false;
+                     }
+                 }
+             }
+         }
+         else
+         {
+             alert('EPC doesnot match');
+         }
+     
+     }
+     
+    </script>
+    <style>
+        .btn
+        {
+            margin-left:208px !important; 
+            
+        }
+    </style>
+ <apex:form id="form">
+    <apex:pagemessages />
+        <apex:pageBlock title="Shipping Details" id="pb" >
+            <apex:pageBlockSection title="Select the Item And Location" collapsible="false" columns="1" id="pbs">
+                <apex:pageblocksectionItem id="pbsi">
+                    <apex:outputlabel value="EPC" ></apex:outputlabel>
+                    <apex:outputpanel >
+                        <div class="requiredInput">
+                        <div class="requiredBlock"></div>
+                            <apex:inputtext value="{!EPC}" id="epc"/>
+                            <apex:outputlabel id="epcerror"></apex:outputlabel>
+                        </div>
+                    </apex:outputpanel>
+               </apex:pageblocksectionItem>
+               <apex:pageblocksectionItem id="pickpbs">
+                   <Apex:outputlabel >Location</Apex:outputlabel> 
+                   <Apex:outputpanel > 
+                       <apex:selectList onchange="disabletext(this);" size="1" id="pickselect" value="{!location}">
+                           <Apex:selectoptions value="{!lstoptionlocation}"></Apex:selectoptions>
+                       </apex:selectList>
+                       <apex:outputlabel id="locationerror"></apex:outputlabel>
+                    </Apex:outputpanel> 
+               </apex:pageblocksectionItem>
+               <apex:pageblocksectionItem id="pbsi1">
+                   <apex:outputlabel >Loc</apex:outputlabel>
+                   <apex:inputtext value="{!locid}" id="textlocation" disabled="false"/>
+               </apex:pageblocksectionItem>
+               <apex:pageBlockSectionItem >
+                   <apex:commandButton value="Ship the Item"  onclick="return savesubmit();"  action="{!ship}" />
+               </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form> 
+</apex:page>

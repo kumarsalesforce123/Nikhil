@@ -1,0 +1,8 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+    <aura:attribute name="value" default="0" type="Integer"/>
+    <aura:attribute name="readonly" type="Boolean" default="false"/>
+    <aura:handler name="change" value="{!v.value}" action="{!c.onValueChange}"/>
+    <ltng:require styles="{$Resource.FiveStarRating.css}"/>
+    <ltng:require scripts="{$Resource.FiveStarRating.js}" afterScriptsLoaded="{!c.afterScriptsLoaded}"/>
+    <ul aura:id="ratingarea" class="{!v.readonly ? 'readonly c-rating' :'c-rating'}"/>
+</aura:component>

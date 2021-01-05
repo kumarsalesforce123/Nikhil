@@ -1,0 +1,15 @@
+<!-- rendered="{!$User.UITheme == 'Theme4t'}" --> 
+<apex:page standardController="account" docType="html-5.0" sidebar="false" lightningStylesheets="true">
+    <apex:pageBlock >
+        <apex:pageBlockSection columns="1">           
+            <apex:outputField value="{!account.Name}"/>  
+            <apex:outputField value="{!account.ID}"/>     
+            <apex:outputField value="{!account.RecordType.Name}"/> 
+            <apex:outputField value="{!account.AnnualRevenue}"/> 
+            <apex:outputField value="{!account.Name}"/>  
+            <apex:outputField value="{!account.ID}"/>     
+            <apex:outputField value="{!account.RecordType.Name}"/> 
+            <apex:outputField value="{!account.AnnualRevenue}"/>         
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:page>

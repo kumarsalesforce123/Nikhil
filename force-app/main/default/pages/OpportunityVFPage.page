@@ -1,0 +1,9 @@
+<apex:page standardController="Opportunity" sidebar="false" extensions="OpportunityVFPageController">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:inputField value="{!Opportunity.Name}"/>
+        </apex:pageBlock>
+        <apex:pageBlock >
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

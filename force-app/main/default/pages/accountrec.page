@@ -1,0 +1,21 @@
+<apex:page standardController="account" recordSetVar="arecs">
+    <apex:form >
+<apex:pageBlock >
+<apex:pageBlockSection title="Account Records are ">
+<apex:pageBlockTable value="{!arecs}" var="item" >
+<apex:column value="{!item.id}"/>
+<apex:column headerValue="  account name">
+    <apex:inputField value="{!item.name}"/>
+    </apex:column>
+<apex:column value="{!item.createddate}"/>
+<apex:column value="{!item.phone}"/>
+<apex:column value="{!item.billingcity}"/>
+</apex:pageBlockTable>
+   
+</apex:pageBlockSection>
+    <apex:pageBlockSection >
+     <apex:commandButton value="save" action="{!save}"/>
+    </apex:pageBlockSection>
+</apex:pageBlock>
+        </apex:form>
+</apex:page>

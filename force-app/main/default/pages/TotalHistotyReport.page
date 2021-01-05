@@ -1,0 +1,235 @@
+<apex:page controller="TotalHistotyReportController" sidebar="false" id="page">
+    <html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>jQuery UI Datepicker - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+  <link rel="stylesheet" href="/resources/demos/style.css"/>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#startdatepicker" ).datepicker();
+  } );
+  $( function() {
+    $( "#enddatepicker" ).datepicker();
+  } );
+      
+    function disablecpick()
+    {
+        var location=document.getElementById('page:pb:form:pbs:pickpbs:pickselect').value;
+        var territory=document.getElementById('page:pb:form:pbs:pbsterritory:territories').value;
+        var cycle=document.getElementById('page:pb:form:pbs:pbscycle:cyclecount').value;
+        
+        document.getElementById('page:pb:form:pbs:pickpbs:pickselect').disabled=false;
+        document.getElementById('page:pb:form:pbs:pbsterritory:territories').disabled=false;
+        document.getElementById('page:pb:form:pbs:pbscycle:cyclecount').disabled=false;
+        if(location!='')
+        {
+            document.getElementById('page:pb:form:pbs:pbsterritory:territories').disabled=true;
+            document.getElementById('page:pb:form:pbs:pbscycle:cyclecount').disabled=true;
+        }
+        else if(territory != '')
+        {
+            document.getElementById('page:pb:form:pbs:pickpbs:pickselect').disabled=true;
+            document.getElementById('page:pb:form:pbs:pbscycle:cyclecount').disabled=true;
+        }
+        else if(cycle != '')
+        {
+            document.getElementById('page:pb:form:pbs:pbsterritory:territories').disabled=true;
+            document.getElementById('page:pb:form:pbs:pickpbs:pickselect').disabled=true;
+        }
+    }  
+    function savesubmit()
+    {
+        var sdate=document.getElementById('startdatepicker').value;
+        var edate=document.getElementById('enddatepicker').value;
+        var location=document.getElementById('page:pb:form:pbs:pickpbs:pickselect').value;
+        var territory=document.getElementById('page:pb:form:pbs:pbsterritory:territories').value;
+        var cycle=document.getElementById('page:pb:form:pbs:pbscycle:cyclecount').value;
+        document.getElementById('page:pb:form:pbs:pbsienddate:enddateerror').innerHTML="";
+        document.getElementById('page:pb:form:pbs:pbis:startdateerror').innerHTML="";
+        document.getElementById('page:pb:form:pbs:pickpbs:locationerror').innerHTML="";
+        
+        if(sdate=='')
+        {
+            document.getElementById('page:pb:form:pbs:pbis:startdateerror').innerHTML="<span style='color:red;'>Start date is required</span>";
+            return false;
+        }
+        else if(edate=='')
+        {
+            document.getElementById('page:pb:form:pbs:pbsienddate:enddateerror').innerHTML="<span style='color:red;'>End date required</span>";
+            return false;
+        }
+        else if($("#startdatepicker").datepicker( 'getDate' )>$("#enddatepicker").datepicker( 'getDate' ))
+        {
+            document.getElementById('page:pb:form:pbs:pbsienddate:enddateerror').innerHTML="<span style='color:red;'>Start date is greater than end date</span>";
+            return false;
+        }
+        else if(location=='' && territory=='' && cycle=='')
+        {
+            document.getElementById('page:pb:form:pbs:pickpbs:locationerror').innerHTML="<span style='color:red;'>Location or territory or cycle count is required</span>";
+            return false;
+        }
+        else
+        {
+            locationparam(sdate,edate,location,territory,cycle);
+        }
+    }
+  </script>
+  <style>
+      .headertag
+      {
+          display:block;
+          background-color:skyblue;
+          padding:4px;
+      }
+  </style>
+</head>
+<body>
+    <apex:pageblock id="pb"> 
+        
+    <apex:form id="form">
+    <apex:pageblocksection columns="1" id="pbs">
+        <apex:pageblocksectionItem id="pbis">
+            <Apex:outputlabel >Start Date:</Apex:outputlabel>
+            <apex:outputpanel >
+            <input type="text" id="startdatepicker"/>
+            <apex:outputlabel id="startdateerror"></apex:outputlabel>
+            </apex:outputpanel>
+        </apex:pageblocksectionItem>
+        <apex:pageblocksectionItem id="pbsienddate">
+            <Apex:outputlabel >End Date:</Apex:outputlabel>
+            <apex:outputPanel >
+            <input type="text" id="enddatepicker"/>
+            <apex:outputlabel id="enddateerror"></apex:outputlabel>
+            </apex:outputPanel>
+        </apex:pageblocksectionItem>
+        <apex:pageblocksectionItem id="pickpbs">
+            <Apex:outputlabel >Location</Apex:outputlabel>
+            <apex:outputpanel >
+                <apex:selectList size="1" id="pickselect" onchange="disablecpick();">
+                    <Apex:selectoptions value="{!lstoptionlocation}"></Apex:selectoptions>
+                </apex:selectList>
+                <apex:outputlabel id="locationerror"></apex:outputlabel>
+            </apex:outputpanel>
+        </apex:pageblocksectionItem>
+        <apex:pageblocksectionItem id="pbsterritory">
+            <apex:outputlabel >Territories</apex:outputlabel>
+            <apex:outputpanel >
+                <apex:selectList size="1" id="territories" onchange="disablecpick();">
+                    <Apex:selectoptions value="{!lstoptionterritories}"></Apex:selectoptions>
+                </apex:selectList>
+                <apex:outputlabel id="territorieserror"></apex:outputlabel>
+            </apex:outputpanel>
+        </apex:pageblocksectionItem>
+        <apex:pageblocksectionItem id="pbscycle">
+            <apex:outputlabel >Cycle Count</apex:outputlabel>
+            <apex:outputpanel >
+                <apex:selectList size="1" id="cyclecount" onchange="disablecpick();">
+                    <Apex:selectoptions value="{!lstoptioncyclecount}"></Apex:selectoptions>
+                </apex:selectList>
+                <apex:outputlabel id="cycleerror"></apex:outputlabel>
+            </apex:outputpanel>
+        </apex:pageblocksectionItem>
+    </apex:pageblocksection><br/>
+        <apex:commandButton value="Submit" onclick="savesubmit(); return false;" style="margin-left:244px;" rerender="pb1,pb2,pb3"/>
+        <apex:actionfunction name="locationparam" action="{!fetchDetails}" rerender="pb1,pb2,pb3" status="actStatusId">
+            <apex:param name="sd" value=""/>
+            <apex:param name="ed" value=""/>
+            <apex:param name="lo" value=""/>
+            <apex:param name="terri" value=""/>
+            <apex:param name="cycl" value=""/>
+        </apex:actionfunction>
+        <apex:actionStatus id="actStatusId" >
+            <apex:facet name="start" >
+                <img src="/img/loading.gif" />                    
+            </apex:facet>
+        </apex:actionStatus>
+        <br/><br/>
+        <h3 class="headertag">Audited Items</h3><br/>
+        <apex:pageblocktable value="{!auditedscanitems}" var="loc" id="pb1">
+            <Apex:column headervalue="Product Number">
+                <apex:outputtext value="{!loc.EPC__r.Product_number__r.name}"/>
+            </apex:column>
+            <Apex:column headervalue="Product Description">
+                <apex:outputfield value="{!loc.EPC__r.Product_number__r.Product_Description__c}"/>
+            </apex:column>
+            <Apex:column headervalue="Location Id">
+                <apex:outputfield value="{!loc.LocationID__r.location_ID__c}"/>
+            </apex:column>
+            <Apex:column headervalue="Location Name">
+                <apex:outputfield value="{!loc.LocationID__r.name}"/>
+            </apex:column>
+            <Apex:column headervalue="EPC">
+                <apex:outputfield value="{!loc.EPC__r.name}"/>
+            </apex:column>
+            <Apex:column headervalue="GTIN">
+                <apex:outputfield value="{!loc.EPC__r.Product_number__r.GTIN__c}"/>
+            </apex:column>
+            <Apex:column headervalue="Scanned By">
+                <apex:outputfield value="{!loc.Scanned_By__c}"/>
+            </apex:column>
+            <Apex:column headervalue="Scanned Time">
+                <apex:outputfield value="{!loc.Scan_time__c}"/>
+            </apex:column>
+        </apex:pageblocktable><br/>
+        <h3 class="headertag">Missed Items</h3><br/>
+        <apex:pageblocktable value="{!misseditems}" var="loc" id="pb2">
+            <Apex:column headervalue="Product Number">
+                <apex:outputtext value="{!loc.Product_number__r.Name}"/>
+            </apex:column>
+            <Apex:column headervalue="Product Description">
+                <apex:outputfield value="{!loc.Product_number__r.Product_Description__c}"/>
+            </apex:column>
+            <Apex:column headervalue="Location Id">
+                <apex:outputfield value="{!loc.Shipping__r.location_ID__c}"/>
+            </apex:column>
+            <Apex:column headervalue="Location Name">
+                <apex:outputfield value="{!loc.Shipping__r.name}"/>
+            </apex:column>
+            <Apex:column headervalue="EPC">
+                <apex:outputfield value="{!loc.name}"/>
+            </apex:column>
+            <Apex:column headervalue="GTIN">
+                <apex:outputfield value="{!loc.Product_number__r.GTIN__c}"/>
+            </apex:column>
+            <Apex:column headervalue="Scanned By">
+               <!-- <apex:outputfield value="{!loc.Scanned_By__c}"/>  -->
+            </apex:column>
+            <Apex:column headervalue="Scanned Time">
+              <!--  <apex:outputfield value="{!loc.Scan_time__c}"/>  -->
+            </apex:column>        </apex:pageblocktable><br/>
+        <h3 class="headertag">Extraneous Items</h3><br/>
+        <apex:pageblocktable value="{!Extraneousitems}" var="loc" id="pb3">
+            <Apex:column headervalue="Product Number">
+                <apex:outputtext value="{!loc.EPC__r.Product_number__r.name}"/>
+            </apex:column>
+            <Apex:column headervalue="Product Description">
+                <apex:outputfield value="{!loc.EPC__r.Product_number__r.Product_Description__c}"/>
+            </apex:column>
+            <Apex:column headervalue="Location Id">
+                <apex:outputfield value="{!loc.LocationID__r.location_ID__c}"/>
+            </apex:column>
+            <Apex:column headervalue="Location Name">
+                <apex:outputfield value="{!loc.LocationID__r.name}"/>
+            </apex:column>
+            <Apex:column headervalue="EPC">
+                <apex:outputfield value="{!loc.EPC__r.name}"/>
+            </apex:column>
+            <Apex:column headervalue="GTIN">
+                <apex:outputfield value="{!loc.EPC__r.Product_number__r.GTIN__c}"/>
+            </apex:column>
+            <Apex:column headervalue="Scanned By">
+                <apex:outputfield value="{!loc.Scanned_By__c}"/>
+            </apex:column>
+            <Apex:column headervalue="Scanned Time">
+                <apex:outputfield value="{!loc.Scan_time__c}"/>
+            </apex:column>
+        </apex:pageblocktable> 
+    </apex:form>
+    </apex:pageblock>
+</body>
+</html>
+</apex:page>

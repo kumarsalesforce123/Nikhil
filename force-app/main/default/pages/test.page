@@ -1,0 +1,12 @@
+<apex:page controller="testing">
+    <apex:form id="form">
+        good mrng 111
+         <apex:outputText rendered="{!showAlert}" id="alert">
+             good mrng
+            <script>
+            alert('Hello World');
+            </script>
+        </apex:outputText>  
+        <apex:actionPoller interval="5" action="{!doRandomAlert}" reRender="form" />
+    </apex:form>
+</apex:page>

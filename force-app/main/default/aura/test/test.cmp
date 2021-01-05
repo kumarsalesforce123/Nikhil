@@ -1,0 +1,10 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId,flexipage:availableForAllPageTypes">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:card title="Nikhil">
+        <lightning:input  label="Subject" aura:id="subject" required="true" messageWhenValueMissing ="Please enter subject"/><br/>
+        <lightning:input  label="Enter a date" type="date" aura:id="tdate" required="true" messageWhenValueMissing ="Please select a Date"/> 
+        <lightning:textarea label="Comments" aura:id="comments" required="true" messageWhenValueMissing ="Please enter Comments"/><br/>
+        
+        <lightning:button variant="base" label="Base" title="Base action" onclick="{! c.handleClick }"/>
+    </lightning:card>   
+</aura:component>

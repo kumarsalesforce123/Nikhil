@@ -1,0 +1,15 @@
+<apex:page controller="CustomTabController" >
+    <apex:tabPanel switchType="Ajax" value="{!SelectedTab}">
+       
+       <apex:tab label="Commision" name="Commision">
+           <Apex:include pagename="commision"/>
+       </apex:tab>
+       <apex:tab label="Shipping" name="Shipping">
+           <c:shipping ></c:shipping>
+       </apex:tab>
+       <apex:tab label="Inventory Report" name="Inventory Report">
+           <Apex:include pagename="InventoryReport"/>
+       </apex:tab>
+    </apex:tabPanel>
+    {!SelectedTab}
+</apex:page>

@@ -1,0 +1,32 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" controller="BoatSearchForm" >
+    <aura:handler name="formsubmit"
+                  event="c:FormSubmit"
+                  action="{!c.onFormSubmit}"
+                  phase="capture"/>
+    
+    <aura:attribute name="searchOptions" type='String[]' default='All'/>
+    <aura:attribute name='searchOptionToIdMap' type='Map' default="{All:''}" />
+    <aura:attribute name='showNewButton' type='Boolean' default='false'/>
+
+        
+    <lightning:layout horizontalAlign="center">
+
+       <lightning:layoutItem class="slds-grid_vertical-align-center" >
+
+           <lightning:select aura:id='typeSelect' name='selectItem' label='' onchange=''>
+             <aura:iteration items='{!v.searchOptions}' var='option'>
+                 <option value='{!option}' text='{!option}'></option>
+             </aura:iteration>
+         </lightning:select>
+       </lightning:layoutItem>
+
+       <lightning:layoutItem class="slds-grid_vertical-align-center" >
+         <lightning:button label="Search" variant="brand" onclick='{!c.onFormSubmit}' />
+         <aura:if isTrue='{!v.showNewButton}'>
+            <lightning:button variant='neutral' label='New' onclick='{!c.createBoat}'/>
+        </aura:if>
+       </lightning:layoutItem>
+
+    </lightning:layout>
+
+</aura:component>

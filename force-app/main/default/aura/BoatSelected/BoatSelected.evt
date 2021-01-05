@@ -1,0 +1,3 @@
+<aura:event type="Application" description="Event template">
+    <aura:attribute name="boatSelected" type="Boat__c"/>
+</aura:event>

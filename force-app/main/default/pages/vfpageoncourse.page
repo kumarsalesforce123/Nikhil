@@ -1,0 +1,32 @@
+<apex:page standardController="course__c" >
+ <apex:form >
+ <apex:sectionHeader title="Course edit" subtitle="New Course" help="https://help.salesforce.com/apex/htauthprovidererrorhandler?ErrorCode=NO_ACCESS&ErrorDescription=Unable+to+find+a+user&ProviderId=0SO30000000000B&startURL=%2Fapex%2Fhtdoor%3Floc%3Dhelp%26target%3Dco_edit.htm%26section%3DCustomObjects%26language%3Den_US%26release%3D202.17.3%26instance%3DNA22"/>
+ <apex:pageBlock title="Course edit">
+ <apex:pageBlockButtons >
+ <apex:commandButton value="save" action="{!save}"/>
+  <apex:commandButton value="cancel" action="{!cancel}"/>
+ </apex:pageBlockButtons>
+ 
+ <apex:pageblockSection title="Information">
+ <apex:pageBlockSectionItem >
+                
+                    <apex:outputLabel >Major</apex:outputLabel>
+                    <apex:inputfield value="{!course__c.Back_ground__c}"/>
+                    
+                  
+                
+                </apex:pageBlockSectionItem>
+ <apex:inputfield value="{!course__c.Back_ground__c}" />
+ <apex:inputfield value="{!course__c.mobile_no__c}" />
+ </apex:pageblockSection>
+ 
+ <apex:pageBlockSection title="Course Deatils">
+  <apex:inputfield value="{!course__c.name}" />
+   <apex:inputfield value="{!course__c.fee__c}" />
+    <apex:inputfield value="{!course__c.discount__c}" />
+     <apex:inputfield value="{!course__c.mentor__c}" />
+     
+ </apex:pageBlockSection>
+ </apex:pageBlock>
+ </apex:form>
+</apex:page>

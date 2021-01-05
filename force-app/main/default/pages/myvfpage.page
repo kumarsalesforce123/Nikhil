@@ -1,0 +1,28 @@
+<apex:page sidebar="false" standardController="account">
+  <apex:form >
+  <apex:sectionHeader title="Account edit" subtitle="New account" help="https://help.salesforce.com/htviewhelpdoc?err=1&id=accounts.htm&siteLang=en_US"/>
+  <apex:pageBlock title="Account edit" >
+  <apex:pageblockButtons >
+  <apex:commandButton value="save" action="{!save}"/> 
+  <apex:commandButton value="cancel" action="{!cancel}"/> 
+   </apex:pageblockButtons>
+   <apex:pageBlockSection title="Account information" collapsible="true">
+   <apex:inputField value="{!account.name}"/>
+    <apex:inputField value="{!account.AccountNumber}"/>
+     <apex:inputField value="{!account.Phone}"/>
+      <apex:inputField value="{!account.rating}"/>
+       <apex:inputField value="{!account.courseinfo__c}"/>
+       
+   </apex:pageBlockSection>
+   <apex:pageBlockSection title="Address Information" collapsible="true">
+   
+   <apex:inputField value="{!account.website}"/>
+   
+   </apex:pageBlockSection>
+   <apex:pageBlockSection title="Description Information" collapsible="true">
+   <apex:inputfield value="{!account.Description}"/>
+   </apex:pageBlockSection>
+   
+  </apex:pageBlock>
+  </apex:form>
+</apex:page>

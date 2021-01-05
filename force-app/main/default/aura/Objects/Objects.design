@@ -1,0 +1,7 @@
+<design:component>
+    
+   <design:attribute name="SObjectName" label="Object" description="Enter the Target Object Name" />
+   <design:attribute name="SObjectFields" label="Fields" description="Enter the fields Name" />
+  
+	
+</design:component>

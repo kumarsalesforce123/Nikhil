@@ -1,0 +1,15 @@
+<apex:page controller="DisplayAccountAndContactsController">
+    <apex:pageBlock >
+        <apex:pageBlockSection >
+        	<apex:pageBlockTable value="{!getAccounts}" var="accts">
+                <apex:column value="{!accts.Name}"/>
+                <apex:pageBlockTable value="{!accts.Contacts}" var="conts"> 
+                    <apex:column value="{!conts.name}"/>
+                    <apex:column value="{!conts.Email}"/>
+                </apex:pageBlockTable>            
+            </apex:pageBlockTable>
+        
+        
+        </apex:pageBlockSection>    
+    </apex:pageBlock>
+</apex:page>

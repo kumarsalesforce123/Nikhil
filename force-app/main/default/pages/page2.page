@@ -1,0 +1,20 @@
+<apex:page controller="c2">
+  <apex:form >
+  <apex:sectionHeader title="To insert records"/>
+  <apex:pageblock >
+ 
+  <apex:pageBlockSection title="Please insert records">
+  
+  
+  <apex:inputField value="{!method1.name}"/>
+  
+  
+  </apex:pageBlockSection>
+   <apex:commandButton value="save" action="{!save}"/>
+  
+  </apex:pageblock>
+  
+  
+  </apex:form>
+  
+</apex:page>

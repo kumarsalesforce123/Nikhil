@@ -1,0 +1,24 @@
+<apex:page standardController="account" recordSetVar="arecs">
+<apex:form >
+<apex:sectionHeader title="The list of records in the account table"/>
+<apex:pageBlock >
+<apex:pageblockSection title="Accounts records are">
+<apex:pageblockTable value="{!arecs}" var="item">
+<apex:column headervalue="Company Name">
+                                <apex:inputField value="{!item.name}"/>
+                                
+                                </apex:column>
+
+<apex:column value="{!item.phone}"/>
+<apex:column value="{!item.rating}"/>
+<apex:column value="{!item.type}"/>
+
+</apex:pageblockTable>
+</apex:pageblockSection>
+
+
+
+</apex:pageBlock>
+</apex:form>
+  
+</apex:page>

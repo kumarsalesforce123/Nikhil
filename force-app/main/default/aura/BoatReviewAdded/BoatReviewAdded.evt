@@ -1,0 +1,3 @@
+<aura:event type="Component" description="review information">
+    <aura:attribute name="BoatReviewAdded" type="Boat__c"/>
+</aura:event>

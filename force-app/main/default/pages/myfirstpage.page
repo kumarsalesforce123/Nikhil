@@ -1,0 +1,15 @@
+<apex:page Controller="apcomm" >
+<apex:form >
+    <apex:pageBlock >
+    <apex:pageBlockSection title="accounnt records are">
+        <apex:pageBlockTable value="{!arecs}" var="item">
+            <apex:column value="{!item.name}" />
+             <apex:column value="{!item.phone}" />
+             <apex:column value="{!item.billingcity}" />
+
+            
+        </apex:pageBlockTable>
+    </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:form>
+</apex:page>

@@ -1,0 +1,88 @@
+<apex:page controller="InventoryReportController" id="page" sidebar="false">
+   
+   <!--  4 to 24 lines -->
+    <Script>
+       function subvalidate()
+       {
+           var location=document.getElementById('page:form:pb:pbs:pickpbs:pickselect').value;
+           var cyclecount=document.getElementById('page:form:pb:pbs:cyclecount:cyclepickselect').value;
+           document.getElementById('page:form:pb:pbs:pickpbs:locationerror').innerHTML="";
+           document.getElementById('page:form:pb:pbs:cyclecount:errorcycle').innerHTML="";
+           
+           if(location=='' || location=='--None--')
+           {
+               document.getElementById('page:form:pb:pbs:pickpbs:locationerror').innerHTML="<span style='color:red;'>Location is required</span>";
+               return false;
+           }
+           else if(cyclecount=='' || cyclecount=='--None--')
+           {
+               document.getElementById('page:form:pb:pbs:cyclecount:errorcycle').innerHTML="<span style='color:red;'>Cycle count is required</span>";
+               return false;
+           }  
+           
+       }
+    </script>
+     <style>
+      .headertag
+      {
+          display:block;
+          background-color:skyblue;
+          padding:4px;
+      }
+  </style>
+    <Apex:form id="form">
+        <Apex:pageblock id="pb">
+            <apex:pageblocksection columns="1" id="pbs">
+                <apex:pageblocksectionItem id="pickpbs">
+                    <Apex:outputlabel >Location</Apex:outputlabel>
+                    <apex:outputpanel >
+                        <apex:selectList size="1" id="pickselect" value="{!locationid}" >
+                            <Apex:selectoptions value="{!lstoptionlocation}"></Apex:selectoptions>
+                            <apex:actionsupport event="onchange" action="{!cycleCount}" rerender="pbs" status="actStatusId"/>
+                        </apex:selectList>
+                        <apex:actionStatus id="actStatusId" >
+                            <apex:facet name="start" >
+                                <img src="/img/loading.gif" />                    
+                            </apex:facet>
+                        </apex:actionStatus>
+          <!-- 50 line added  -->              
+                        
+                        <apex:outputlabel id="locationerror"></apex:outputlabel>
+                    </apex:outputpanel>
+                </apex:pageblocksectionItem>
+                <apex:pageblocksectionItem id="cyclecount">
+                    <Apex:outputlabel >Cycle Count</Apex:outputlabel>
+                    <apex:outputpanel >
+           <!--  59  id="cyclepickselect"  added  -->        
+                    
+                    
+                        <apex:selectList size="1" id="cyclepickselect" value="{!cycleid}">
+                            <Apex:selectoptions value="{!lstoptioncycle}"></Apex:selectoptions>
+                        </apex:selectList>
+           <!-- 64 line added  -->             
+                        
+                        <Apex:outputlabel id="errorcycle"></Apex:outputlabel>
+                    </apex:outputpanel>
+                </apex:pageblocksectionItem>
+                <apex:outputpanel style="margin-left:232px;">
+           <!--70,71 onclick="return subvalidate();"   added   -->    
+                
+                <apex:commandButton Value="Submit" onclick=" return subvalidate();" action="{!submit}" />&nbsp;
+                <apex:commandButton Value="Generate PDF" onclick=" return subvalidate();" action="{!generatePDF}"/>
+                </apex:outputpanel>
+            </apex:pageblocksection> 
+            <h3 class="headertag">Inventory</h3><br/>
+            <apex:pageblocktable value="{!lstinventory}" var="inv">
+                <Apex:column headervalue="EPC">
+                    <apex:outputtext value="{!inv.EPC__c}"/>
+                </apex:column>
+                <Apex:column headervalue="Product Name">
+                    <apex:outputfield value="{!inv.Product_number__r.name}"/>
+                </apex:column>
+                <Apex:column headervalue="Product Description">
+                    <apex:outputfield value="{!inv.Product_number__r.Product_Description__c}"/>
+                </apex:column>
+            </apex:pageblocktable>
+        </Apex:pageblock>
+    </Apex:form>
+</apex:page>

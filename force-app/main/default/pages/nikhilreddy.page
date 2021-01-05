@@ -1,0 +1,194 @@
+<apex:page controller="sf_dev_test_controller" sidebar="fasle" showHeader="false" title="Salesforce Developer Test Page">
+
+    <style>
+        .btn {
+        color:#000;
+        font-size:105%;
+        margin:1px;
+        padding:6px 5px;
+        border:1px solid #b3b3b3;
+        border-bottom-color:#7f7f7f;
+        text-decoration: none;
+        background:#e8e8e9;
+        -moz-border-radius:3px;
+        -webkit-border-radius:3px;
+        border-radius:3px;
+        
+        }
+        
+        .btn:hover {
+        cursor:default;
+        background:#ccffff;
+        }
+    </style>
+    <div id="instructions">
+        <h2>
+            Basic Info About This Page
+        </h2>
+        <ul>
+            <li>
+                This page collects user submitted information about contacts and creates contact records based on that data.
+            </li>
+            <li>
+                The user must first select a Contact Role.
+            </li>
+            <li>
+                Depending on the Contact Role, different fields are required.
+                <ul>
+                    <li>
+                        For All Roles, the Email Address, First Name, and Last Name are required.
+                    </li>
+                    <li>
+                        For the Customer, Technical, and Executive Roles, the Phone Number is also required.
+                    </li>
+                    <li>
+                        For the Technical and Executive Roles, the Job Title is additionally required.
+                    </li>
+                    <li>
+                        For the Executive Role, the Assistant Name is also required.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Additional validations require that:
+                <ul>
+                    <li>
+                        The Email address contain an "@" symbol
+                    </li>
+                    <li>
+                        The First Name be less than 40 characters.
+                    </li>
+                    <li>
+                        The Last Name be less than 80 characters.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Once a record is inserted, the newly created Contact ID should be displayed in a Page Message (not currently in code).
+            </li>
+        </ul> 
+        <br/>
+        <h2>
+            Code Sample Instructions
+        </h2>
+        <ul>
+            <li>
+                You are required to do the following three things:
+                <ol>
+                    <li>
+                        Refactor the controller (sf_dev_test_controller) to follow best practices.
+                        <ul>
+                            <li>
+                                Pay particular attention to the principles of Single Responsibility and Don't Repeat Yourself.
+                            </li>
+                            <li>
+                                Feel free to create seperate utility classes if you feel that is most practical.
+                            </li>
+                            <li>
+                                Ensure that you are using the correct access level modifier for all variables and methods.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        Include readable, descriptive, JavaDoc-like comments on all of your methods.
+                    </li>
+                    <li>
+                        Create a test class that meets the following requirements:
+                        <ul>
+                            <li>
+                            Achieve at least 95% code line coverage.
+                            </li>
+                            <li>
+                                Includes both positive and negative test cases.
+                            </li>
+                            <li>
+                                Produces meaningful test results.
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
+                <br/>
+            <b>NOTE: You are not required to make this Visualforce page prettier or more user friendly.  
+                We only ask that you provide an updated version of the controller.  
+                However, if your changes to the controller require changes to this Visualforce page, you 
+                must provide an updated copy of the Visualforce page.</b></li>
+        </ul>
+    </div>
+    <apex:form >
+    <apex:pageMessages ></apex:pageMessages>
+        <div id="input_section">
+            <div>
+                <br/>
+               
+                <br/>
+                <table>
+                    <tr>
+                        <td>
+                            Contact Role: 
+                        </td>
+                        <td>
+                            <apex:selectList id="cont_role" value="{!cont_role}" multiselect="false" size="1">
+                                <apex:selectOption itemValue="" itemLabel=""/>
+                                <apex:selectOption itemValue="TECH" itemLabel="Technical Contact"/>
+                                <apex:selectOption itemValue="EXEC" itemLabel="Executive Contact"/>
+                                <apex:selectOption itemValue="CUST" itemLabel="Customer Contact"/>
+                                <apex:selectOption itemValue="UNKNOWN" itemLabel="Unknown"/>
+                            </apex:selectList>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Contact Email: 
+                        </td>
+                        <td>
+                            <apex:inputText id="cont_email" value="{!email}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Contact First Name: 
+                        </td>
+                        <td>
+                            <apex:inputText id="cont_fname" value="{!first_name}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Contact Last Name: 
+                        </td>
+                        <td>
+                            <apex:inputText id="cont_lname" value="{!last_name}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Contact Phone Number: 
+                        </td>
+                        <td>
+                            <apex:inputText id="cont_phone" value="{!phone_num}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Contact Job Title: 
+                        </td>
+                        <td>
+                            <apex:inputText id="cont_title" value="{!job_title}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Contact Assistant Name: 
+                        </td>
+                        <td>
+                            <apex:inputText id="cont_assistant" value="{!assistant}"/>
+                        </td>
+                    </tr>
+                </table>
+                <center style="margin: 50px auto 50px;">
+                    <apex:commandButton value="Continue" action="{!create_contact}" styleClass="btn" title="Select this button to return to create your contact." tabindex="0"/>
+                </center>
+            </div>
+        </div>
+    </apex:form>
+</apex:page>

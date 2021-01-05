@@ -1,0 +1,47 @@
+<apex:page controller="c1" >
+<apex:form >
+<apex:sectionHeader title="Accounts"/>
+<apex:pageBlock title="Accounts">
+<apex:commandButton value="accounts are" action="{!method2}"/> <br/>
+<apex:commandButton value="accounts records are" action="{!method3}"/>
+<apex:pageblockSection title="list of account records are">
+
+
+
+
+<apex:pageBlockTable value="{!method}" var="a">
+<apex:column value="{!a.id}"/>
+<apex:column value="{!a.name}"/>
+<apex:column value="{!a.phone}"/>
+
+
+
+
+
+
+
+
+
+</apex:pageBlockTable>
+
+
+
+
+
+</apex:pageblockSection>
+
+
+
+
+
+
+
+
+</apex:pageBlock>
+
+
+
+</apex:form>
+ 
+ 
+</apex:page>

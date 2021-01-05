@@ -1,0 +1,6 @@
+<aura:event type="COMPONENT" description="fires when a user clicks a boat on BoatSearchResults.cmp">
+
+    <aura:attribute name="BoatId" type="Id"/>
+
+
+</aura:event>

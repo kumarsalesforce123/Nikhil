@@ -1,0 +1,110 @@
+<apex:page sidebar="false">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <html>
+      <head>
+        <style>
+           #main ul{
+                list-style-type:none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                background-color: #333;
+            }
+           #main li{
+                float: left;
+            }
+           #main li a{
+                display: inline-block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size:14px;
+            }
+
+            #main li a:hover {
+                background-color: #111;
+            }
+            
+            
+            .dropdown-content  {
+                width:200px;   
+                background-color: #111;
+                color:#fff;
+                position:absolute;
+                display:none;
+                z-index:999 !important;
+            }
+            #main li a:hover .dropdown-content{
+                background-color: #ff9900;
+                position:absolute;
+            }
+             #main li a:hover .dropdown-content a:hover{
+                background-color: #ff9900;
+            }
+        </style>
+        <script>
+            $(document).ready(function(){
+                $("#shipping").hide();
+                $("#commision").show();
+                $("#cyclecount").hide();
+                
+                
+                $(".dropbtn,.dropdown-content").hover(function(){
+                    $('.dropdown-content').show();
+                },function(){
+                    $('.dropdown-content').hide();
+                });
+                
+                $("#com").click(function(){
+                    $("#shipping").hide();
+                    $("#commision").show();
+                    $("#cyclecount").hide();
+                });
+                
+                $("#shi").click(function(){
+                    $("#shipping").show();
+                    $("#commision").hide();
+                    $("#cyclecount").hide();
+                });
+                
+                $("#cycle").click(function(){
+                    $("#shipping").hide();
+                    $("#commision").hide();
+                    $("#cyclecount").show();
+                });
+                
+            });
+        </script>
+      </head>
+      <body>
+          <div id="main">
+              <ul>
+                  <li > <a href="#" id="com">Commision</a></li>
+                  <li> <a href="#" id="shi">Shipping</a></li>
+                  <li> <a href="#" id="cycle">Cycle Counts</a></li>
+                  <li class="dropdown">
+                      <a href="#" class="dropbtn">Reports</a> 
+                      <div class="dropdown-content">
+                      <a href="#">Link 1</a><br/>
+                      <a href="#">Link 2</a><br/>
+                      <a href="#">Link 3</a>
+                      </div>
+                  </li>   
+              </ul>
+              
+          </div>
+          <div id="commision">
+             <apex:include pageName="commision"/>
+          </div> 
+          <div id="shipping">
+              <c:shipping ></c:shipping>
+              <!--<apex:include pageName="shipping"/>-->  
+          </div>
+          <div id="cyclecount">
+              <apex:include pageName="InventoryReport"/>
+             
+          </div> 
+      </body>
+    </html>
+</apex:page>

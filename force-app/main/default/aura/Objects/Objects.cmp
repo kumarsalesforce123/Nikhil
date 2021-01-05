@@ -1,0 +1,60 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" controller = "objects">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>    
+    <aura:attribute name="SObjectName" type="String"  />
+    <aura:attribute name="SObjectFields" type="String" />
+    <aura:attribute name="selectedCount" type="integer" default="0"/>
+    
+    <aura:attribute name="Objectdata" type="Object"/>
+    <aura:attribute name="FieldLabel" type="List"/>
+    <aura:attribute name="FieldName" type="List"/>
+    
+    <div class="slds-page-header">
+        <p class="slds-page-header__title slds-truncate" title="">{!v.SObjectName} List</p><br/>
+        <span class="slds-badge">Selected {!v.SObjectName}:{!v.selectedCount}</span>
+        <div class="slds-grid slds-grid--align-end"> 
+            <button class="slds-button slds-button--brand" onclick="{!c.deleteSelected}">Delete selected {!v.SObjectName}s</button>
+        </div>
+    </div>    
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+        <thead>            
+            <tr class="slds-text-title--caps">
+                <th style="width:3.25rem;" class="slds-text-align--right">
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <label class="slds-checkbox">
+                                <ui:inputCheckbox aura:id="boxid" change="{!c.selectAll}"/>
+                                <span class="slds-checkbox--faux"></span>
+                                <span class="slds-form-element__label text"></span>
+                            </label>
+                        </div>
+                    </div>
+                </th>                
+                <aura:iteration items="{!v.FieldLabel}" var="label">
+                    <th>   {!label} </th>
+                </aura:iteration>                
+            </tr>            
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.Objectdata}" var="data">
+                <tr>
+                    <td scope="row" class="slds-text-align--right" style="width:3.25rem;">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control">
+                                <label class="slds-checkbox">
+                                    <ui:inputCheckbox text="{!data.Id}" aura:id="allrows" value="" change="{!c.checkboxSelect}"/>
+                                    <span class="slds-checkbox--faux"></span>
+                                    <span class="slds-form-element__label text"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                    <aura:iteration items="{!v.FieldName}" var="fieldName">
+                        <td>
+                            <c:inner_Component ObjectName="{!data}" fieldName="{!fieldName}" />
+                        </td>
+                    </aura:iteration>                                            
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>    
+</aura:component>

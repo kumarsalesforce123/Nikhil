@@ -1,0 +1,95 @@
+<apex:page controller="commision" sidebar="false" tabStyle="Location__c">
+    <script>
+    
+        JsonData = function () {
+            return JSON.stringify({
+                param1: $("#name").val(),
+                param2: $('#id').val(),
+                param3: readImage()
+            })
+        }
+
+        function SendPrintCommand() {
+        var s='{!obj}';
+        alert(s);
+            var imgStr = readImage();
+            alert('imgStr');
+            $.ajax({
+                type: "POST",
+                url: 'http://localhost:8443/rfidtrayrequest?cmd=cardprinting',
+                data: JsonData()
+            }).done(function (data) {
+                if (data.indexOf("Fail") != -1)
+                    alert(data);
+                else
+                    alert('Success');
+            })
+            .fail(function () {
+                alert('Please make sure TagMatiks RFID Tray is running.');
+            });    
+        }
+    </script>
+
+
+
+    <script>
+        function disableOnSubmit(input) {
+            setTimeout('disableAfterTimeout(\'' + input.id + '\');', 50);
+        }
+        function disableAfterTimeout(id) {
+            var toDisable = document.getElementById( id );
+            toDisable.disabled = 'disabled';
+            toDisable.className = 'btnDisabled';
+            toDisable.value = "Saving..."
+        }
+    </script>       
+    <style>
+        .btn
+        {
+            margin-left:235px !important; 
+            background:skyblue !important;
+        }
+    </style>
+    <apex:form >
+        <apex:pagemessages ></apex:pagemessages>
+        <apex:pageBlock title="Field Commision" >
+       <apex:commandButton value="print" onclick="SendPrintCommand();"/>  
+            <apex:pageBlockSection title="Scaning section" collapsible="false" columns="1" > 
+                <apex:pageblocksectionItem >
+                    <apex:outputlabel value="Scan Box" ></apex:outputlabel>
+                    <apex:outputpanel >
+                        <div class="requiredInput">
+                        <div class="requiredBlock"></div>
+                        <apex:inputtext value="{!barcode}" />
+                        </div>
+                    </apex:outputpanel>
+                </apex:pageblocksectionItem>
+                <apex:commandButton value="Validate" action="{!validateCommision}" onclick="disableOnSubmit(this);" styleClass="btn" disabled="{!flag}"/>  
+                <apex:pageblocksectionItem >
+                    <apex:outputlabel value="UPN" ></apex:outputlabel>
+                    <apex:inputtext value="{!upn}"/>
+                </apex:pageblocksectionItem>
+                <apex:pageblocksectionItem >
+                    <apex:outputlabel value="Expiry" ></apex:outputlabel>
+                    <apex:inputtext value="{!expiry}"/>
+                </apex:pageblocksectionItem> 
+                <apex:pageblocksectionItem >
+                    <apex:outputlabel value="Lot No" ></apex:outputlabel>
+                    <apex:inputtext value="{!lotno}"/>
+                </apex:pageblocksectionItem>
+                <apex:pageblocksectionItem id="pickpbs">
+                    <Apex:outputlabel >Location</Apex:outputlabel>
+                    <apex:selectList size="1" id="pickselect" value="{!locationname}">
+                        <Apex:selectoptions value="{!lstoptionlocation}"></Apex:selectoptions>
+                    </apex:selectList>
+                </apex:pageblocksectionItem> 
+                <apex:pageblocksectionItem >
+                    <apex:outputlabel >EPC</apex:outputlabel>
+                    <apex:outputlabel value="{!hexepc}" />
+                </apex:pageblocksectionItem>
+                    <apex:commandButton value="Commision" action="{!calCommision}" styleClass="btn" disabled="{!!flag}" />  
+                </apex:pageBlockSection>
+              <!--  <apex:commandLink value="Print" onclick="window.print();"/>  -->
+            </apex:pageBlock>
+    </apex:form>
+</apex:page>

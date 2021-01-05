@@ -1,0 +1,19 @@
+<apex:page controller="sosl" sidebar="false">
+<apex:form >
+
+<apex:pageBlock title="my search interface">
+
+<apex:inputText />
+<apex:commandButton value="Search"/>
+
+<apex:pageblockTable value="{!arecs}" var="a">
+<apex:column value="{!a.id}"/>
+<apex:column value="{!a.name}"/>
+<apex:column value="{!a.phone}"/>
+
+</apex:pageblockTable>
+
+</apex:pageBlock>
+
+</apex:form>
+</apex:page>

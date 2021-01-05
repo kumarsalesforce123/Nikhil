@@ -1,0 +1,10 @@
+<apex:page sidebar="false">
+  <!-- Begin Default Content REMOVE THIS -->
+  <apex:pageBlock >
+  <apex:sectionHeader title="account" subtitle="new account"/>
+  <h2>Congratulations</h2><br/><br/>
+  This is your new Page: pj1<br/><br/>
+  good morning
+  <!-- End Default Content REMOVE THIS -->
+  </apex:pageBlock>
+</apex:page>
