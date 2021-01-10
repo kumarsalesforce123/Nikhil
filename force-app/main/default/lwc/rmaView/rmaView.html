@@ -1,0 +1,369 @@
+<template>
+    <template if:true={fieldsetsdata}>
+        <lightning-tabset variant="vertical">
+            <lightning-tab label="RMA Details">
+               <!-- <div class="slds-text-longform">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col">
+                            <div>
+                                <div>                                    
+                                    Dealer Email : 
+                                </div>
+                                <div>
+                                    {Account.Name}
+                                </div>                                               
+                            </div>
+                            <div>
+                                Kumar
+                            </div>
+                            <div>
+                                Nikhil
+                            </div>
+                            <div>
+                                Kumar
+                            </div>                           
+                        </div>
+                        <div class="slds-col">
+                            <div>
+                                Nikhil
+                            </div>
+                            <div>
+                                Kumar
+                            </div>
+                            <div>
+                                Nikhil
+                            </div>
+                            <div>
+                                Kumar
+                            </div>
+                        </div>
+                    </div>                                   
+                </div> -->
+                <lightning-layout multiple-rows>
+                    <template for:each={fieldsetsdata.Field_set_1} for:item="rec" for:index="indx">
+                            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small" key={rec.Field}>
+                                <div class="header-column">
+                                    <p class="field-title" title={rec.Field}>{rec.Field}</p>
+                                    <p>{rec.Value}</p>
+                                </div>
+                            </lightning-layout-item>
+                    </template>                    
+                </lightning-layout>            
+            </lightning-tab>
+            <lightning-tab label="Replacement Details">
+                <lightning-layout multiple-rows>
+                    <template for:each={fieldsetsdata.Field_set_2} for:item="rec" for:index="indx">
+                            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small" key={rec.Field}>
+                                <div class="header-column">
+                                    <p class="field-title" title={rec.Field}>{rec.Field}</p>
+                                    <p>{rec.Value}</p>
+                                </div>
+                            </lightning-layout-item>
+                    </template>                    
+                </lightning-layout>  
+            </lightning-tab>
+            <lightning-tab label="Return Details">
+                <lightning-layout multiple-rows>
+                    <template for:each={fieldsetsdata.Field_set_3} for:item="rec" for:index="indx">
+                            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small" key={rec.Field}>
+                                <div class="header-column">
+                                    <p class="field-title" title={rec.Field}>{rec.Field}</p>
+                                    <p>{rec.Value}</p>
+                                </div>
+                            </lightning-layout-item>
+                    </template>                    
+                </lightning-layout>  
+            </lightning-tab>
+            <lightning-tab label="Settlement Details">
+                <lightning-layout multiple-rows>
+                    <template for:each={fieldsetsdata.Field_set_4} for:item="rec" for:index="indx">
+                            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small" key={rec.Field}>
+                                <div class="header-column">
+                                    <p class="field-title" title={rec.Field}>{rec.Field}</p>
+                                    <p>{rec.Value}</p>
+                                </div>
+                            </lightning-layout-item>
+                    </template>                    
+                </lightning-layout>                                    
+            </lightning-tab>
+        </lightning-tabset>
+    </template>
+  <!--  <div>
+            <section role="dialog" tabindex="-1"
+                    aria-labelledby="modal-heading-01"
+                    aria-modal="true"
+                    aria-describedby="modal-content-id-1"
+                    class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h1>Account </h1>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-vertical-tabs">
+                        <ul class="slds-vertical-tabs__nav" role="tablist" aria-orientation="vertical">
+                            <li class="slds-vertical-tabs__nav-item slds-is-active" title="Tab 1" role="presentation">
+                                <a class="slds-vertical-tabs__link" href="javascript:void(0)"  onclick={saveMethod}  role="tab" tabindex="0"
+                                    aria-selected="true" aria-controls="slds-vertical-tabs-0" id="slds-vertical-tabs-0__nav">
+                                    <span class="slds-vertical-tabs__left-icon"></span>
+                                    <span class="slds-truncate" title="RMA Details">RMA Details</span>
+                                    <span class="slds-vertical-tabs__right-icon"></span>
+                                </a>
+                            </li>
+                            <li class="slds-vertical-tabs__nav-item" title="Tab 2" role="presentation">
+                                <a class="slds-vertical-tabs__link" href="javascript:void(0)" onclick={saveMethod} role="tab" tabindex="-1"
+                                    aria-selected="false" aria-controls="slds-vertical-tabs-1" id="slds-vertical-tabs-1__nav">
+                                    <span class="slds-vertical-tabs__left-icon"></span>
+                                    <span class="slds-truncate" title="Replacement Details">Replacement Details</span>
+                                    <span class="slds-vertical-tabs__right-icon"></span>
+                                </a>
+                            </li>
+                            <li class="slds-vertical-tabs__nav-item" title="Tab" role="presentation">
+                                <a class="slds-vertical-tabs__link" href="javascript:void(0)"  onclick={saveMethod} role="tab" tabindex="-1"
+                                    aria-selected="false" aria-controls="slds-vertical-tabs-2" id="slds-vertical-tabs-2__nav">
+                                    <span class="slds-vertical-tabs__left-icon"></span>
+                                    <span class="slds-truncate" title="Return Details">Return Details</span>
+                                    <span class="slds-vertical-tabs__right-icon"></span>
+                                </a>
+                            </li>
+                            <li class="slds-vertical-tabs__nav-item" title="Tab 3" role="presentation">
+                            <a class="slds-vertical-tabs__link" href="javascript:void(0)"  onclick={saveMethod} role="tab" tabindex="-1"
+                                aria-selected="false" aria-controls="slds-vertical-tabs-3" id="slds-vertical-tabs-3__nav">
+                                <span class="slds-vertical-tabs__left-icon"></span>
+                                <span class="slds-truncate" title="Settlement Details">Settlement Details</span>
+                                <span class="slds-vertical-tabs__right-icon"></span>
+                            </a>
+                        </li>
+                        </ul>
+                        <div class="slds-vertical-tabs__content slds-show" id="slds-vertical-tabs-0" role="tabpanel"
+                            aria-labelledby="slds-vertical-tabs-0__nav">
+                            <div class="slds-text-longform">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">
+                                        <div>
+                                            <div>
+                                                Dealer Email : 
+                                            </div>
+                                            <div>
+                                                Nikhil
+                                            </div>                                               
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                    </div>
+                                    <div class="slds-col">
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                    </div>
+                                </div>                                   
+                            </div>
+                        </div>
+                        <div class="slds-vertical-tabs__content slds-hide" id="slds-vertical-tabs-1" role="tabpanel"
+                            aria-labelledby="slds-vertical-tabs-1__nav">
+                            <div class="slds-text-longform">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                    </div>
+                                    <div class="slds-col">
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-vertical-tabs__content slds-hide" id="slds-vertical-tabs-2" role="tabpanel"
+                            aria-labelledby="slds-vertical-tabs-2__nav">
+                            <div class="slds-text-longform">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                    </div>
+                                    <div class="slds-col">
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-vertical-tabs__content slds-hide" id="slds-vertical-tabs-3" role="tabpanel"
+                            aria-labelledby="slds-vertical-tabs-3__nav">
+                            <div class="slds-text-longform">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col">
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                    </div>
+                                    <div class="slds-col">
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                        <div>
+                                            Kumar
+                                        </div>
+                                        <div>
+                                            Nikhil
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div> 
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand"
+                                    label="Close"
+                                    title="Close"
+                                    onclick={closeModal}></lightning-button>
+                </footer>
+            </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+-->
+
+</template>

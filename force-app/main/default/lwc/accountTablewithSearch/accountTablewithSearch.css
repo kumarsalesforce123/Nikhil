@@ -1,0 +1,35 @@
+h1 {
+    font-size: xx-large;
+}
+.button-height{
+    height:5rem;
+}
+.table-border{
+    padding: 30px;
+}
+.slds-modal__container {
+    height : auto;  
+    max-width: 80rem !important;
+    width: 80% !important;
+}
+
+.button-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.filter-button {
+    min-width: 160px;
+    color: #b0adab;
+    border-color: #b0adab;
+}
+.filter-button div {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.filter-button-active {
+    background-color: #fff7e5;
+    border-color: #ffb100;
+    color: #ffb100;
+}
