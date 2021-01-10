@@ -1,0 +1,14 @@
+h1 {
+    font-size: xx-large;
+}
+.button-height{
+    height:5rem;
+}
+.table-border{
+    padding: 30px;
+}
+.slds-modal__container {
+    height : auto;  
+    max-width: 80rem !important;
+    width: 80% !important;
+}

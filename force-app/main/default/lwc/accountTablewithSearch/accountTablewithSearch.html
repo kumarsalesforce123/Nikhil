@@ -1,0 +1,91 @@
+<template>
+    <lightning-card  title="" >
+        <div class="slds-align_absolute-center">
+            <h1>RMA-V2</h1>
+        </div>
+        <div class = "slds-box slds-p-around_medium">
+            <div>
+                <lightning-input type="text" label= "Search" value={searchString} onchange={handleSearchInputChange}></lightning-input>
+            </div> 
+            <div class="button-wrapper slds-m-vertical_large">                
+                <button title="All" onclick={allAccountsData} class={allFilterButtonClass} type="button"> <div><span>All</span><span>{allAccounts.length}</span></div> </button>
+                <button title="Prospect" onclick={allProspectsData} class={prospectFilterButtonClass} type="button"> <div><span>Prospect</span><span>{ProspectList.length}</span></div> </button>
+                <button title="Customers" onclick={allCustomersData} class={customerFilterButtonClass} type="button"> <div><span>Customer</span><span>{CustomerList.length}</span></div> </button>
+            </div>
+            <!--<div> 
+                <lightning-button-group class="slds-align_absolute-center button-height">
+                <lightning-button variant="brand-outline" label={allAccountsCount} onclick={allAccountsData}></lightning-button>
+                <lightning-button variant="brand-outline" label={allProspectCount} onclick={allProspectsData}></lightning-button>
+                <lightning-button variant="brand-outline" label={allCustomerCount} onclick={allCustomersData}></lightning-button>
+            </lightning-button-group>
+        </div>-->
+            <div>
+                <template if:true={accData.length}>
+                    <lightning-datatable data={accData} 
+                        columns={columns} 
+                        key-field="Id" 
+                        hide-checkbox-column
+                        onrowaction={handleRowAction}>
+                    </lightning-datatable>
+                </template>
+                <template if:false={accData.length}>
+                    <div class="slds-box"> No Records....! </div>
+                </template>
+            </div>
+        </div>
+        <!-- Code for View Case-->
+        <div>
+            <template if:true={ShowcaseModal}>
+                <section role="dialog" tabindex="-1"
+                        aria-labelledby="modal-heading-01"
+                        aria-modal="true"
+                        aria-describedby="modal-content-id-1"
+                        class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- modal header -->
+                    <header class="slds-modal__header">
+                        <h1>Account : {Account.Name}</h1>
+                    </header>
+                    <!-- modal body -->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id">
+                        Case view Section
+                    </div>
+                    <!-- modal footer start-->
+                    <footer class="slds-modal__footer">
+                        <lightning-button variant="brand"
+                                        label="Close"
+                                        title="Close"
+                                        onclick={closeModal}></lightning-button>
+                    </footer>
+                </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            
+            </template>
+        </div>
+        <!-- Code for View RMA-->
+        <div>            
+            <template if:true={ShowRMAModal}>
+                <section role="dialog" 
+                        aria-modal="true"                        
+                        class="slds-modal slds-fade-in-open">                    
+                    <lightning-card class="slds-modal__container"  variant="Narrow" icon-name="standard:account">
+                        <div slot="title">
+                            Account : {Account.Name}
+                        </div>
+                        <p class="slds-p-around_medium">
+                            <c-rma-view record-id={Account.Id}></c-rma-view></p>
+                        <div slot="footer">
+                            <lightning-button variant="brand"
+                                            label="Close"
+                                            title="Close"
+                                            onclick={closeModal}></lightning-button>
+                        </div>
+                    </lightning-card>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            
+            </template>
+        </div>
+    </lightning-card> 
+</template>
