@@ -3,14 +3,55 @@
         <div class="slds-align_absolute-center">
             <h1>RMA-V2</h1>
         </div>
-        <div class = "slds-box slds-p-around_medium">
+        <div class = "slds-box slds-p-around_medium slds-m-around_medium">
             <div>
-                <lightning-input type="text" label= "Search" value={searchString} onchange={handleSearchInputChange}></lightning-input>
+                <lightning-layout vertical-align="end" multiple-rows>
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="10" large-device-size="10" padding="around-small">
+                        <lightning-input type="text" label= "Search" value={searchString} onchange={handleSearchInputChange}></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="2" large-device-size="2" padding="around-small">
+                        <c-export-to-c-s-v-tool object-api="Account" fields="Id, Name, Type, Rating, Phone, Website, AnnualRevenue" file-name={fileName} limit="5000"></c-export-to-c-s-v-tool>
+                    </lightning-layout-item>
+                </lightning-layout>                
             </div> 
-            <div class="button-wrapper slds-m-vertical_large">                
-                <button title="All" onclick={allAccountsData} class={allFilterButtonClass} type="button"> <div><span>All</span><span>{allAccounts.length}</span></div> </button>
-                <button title="Prospect" onclick={allProspectsData} class={prospectFilterButtonClass} type="button"> <div><span>Prospect</span><span>{ProspectList.length}</span></div> </button>
-                <button title="Customers" onclick={allCustomersData} class={customerFilterButtonClass} type="button"> <div><span>Customer</span><span>{CustomerList.length}</span></div> </button>
+            <div class="button-wrapper slds-m-vertical_large">       
+                <lightning-layout>
+                    <lightning-layout-item flexibility="auto" padding="around-small">
+                        <div>
+                            <button title="All" onclick={filterByType} data-type="" class={allFilterButtonClass} type="button">
+                                    <div><span>All</span><span>{allAccounts.length}</span></div>
+                            </button>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto" padding="around-small">
+                        <div>
+                            <button title="Prospect" name="Prospect" data-type="Prospect" onclick={filterByType} class={prospectFilterButtonClass} type="button">                                
+                                    <div><span>Prospect</span><span>{allProspectCount}</span></div>                              
+                            </button>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto" padding="around-small">
+                        <div>                            
+                            <button title="Customers" name="Customer - Direct" data-type="Customer - Direct" onclick={filterByType} class={customerFilterButtonClass} type="button">
+                                <div><span>Customer</span><span>{allCustomerCount}</span></div>                                  
+                            </button>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto" padding="around-small">
+                        <div>
+                            <button title="Test1" type="button" class="slds-button slds-button_neutral filter-button">
+                                <div><span>Test1</span><span>0</span></div>
+                            </button>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto" padding="around-small">
+                        <div>
+                            <button title="Test2" type="button" class="slds-button slds-button_neutral filter-button">
+                                <div><span>Test2</span><span>0</span></div>
+                            </button>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
             </div>
             <!--<div> 
                 <lightning-button-group class="slds-align_absolute-center button-height">
@@ -25,7 +66,8 @@
                         columns={columns} 
                         key-field="Id" 
                         hide-checkbox-column
-                        onrowaction={handleRowAction}>
+                        onrowaction={handleRowAction}
+                        class="slds-table_cell-buffer slds-table_striped">
                     </lightning-datatable>
                 </template>
                 <template if:false={accData.length}>
@@ -44,7 +86,7 @@
                 <div class="slds-modal__container">
                     <!-- modal header -->
                     <header class="slds-modal__header">
-                        <h1>Account : {Account.Name}</h1>
+                        <h1>Account : {AccountSelected.Name}</h1>
                     </header>
                     <!-- modal body -->
                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id">
@@ -71,16 +113,25 @@
                         class="slds-modal slds-fade-in-open">                    
                     <lightning-card class="slds-modal__container"  variant="Narrow" icon-name="standard:account">
                         <div slot="title">
-                            Account : {Account.Name}
+                            Account : {AccountSelected.Name}
                         </div>
-                        <p class="slds-p-around_medium">
-                            <c-rma-view record-id={Account.Id}></c-rma-view></p>
-                        <div slot="footer">
+                        <lightning-button-icon slot="actions"
+                            icon-name="utility:close"
+                            variant="border-filled"
+                            alternative-text="close"
+                            title="Close"
+                            icon-class="slds-m-around_medium" onclick={closeModal}>
+                        </lightning-button-icon>                       
+                        
+                        <div >
+                            <c-rma-view record-id={AccountSelected.Id}></c-rma-view>
+                        </div>
+                       <!-- <div slot="footer">
                             <lightning-button variant="brand"
                                             label="Close"
                                             title="Close"
                                             onclick={closeModal}></lightning-button>
-                        </div>
+                        </div>-->
                     </lightning-card>
                 </section>
                 <div class="slds-backdrop slds-backdrop_open"></div>

@@ -1,93 +1,95 @@
 <template>
-    <template if:true={fieldsetsdata}>
-        <lightning-tabset variant="vertical">
-            <lightning-tab label="RMA Details">
-               <!-- <div class="slds-text-longform">
-                    <div class="slds-grid slds-gutters">
-                        <div class="slds-col">
-                            <div>
-                                <div>                                    
-                                    Dealer Email : 
+    <div class="c-continer">
+        <template if:true={fieldsetsdata}>
+            <lightning-tabset variant="vertical" class="vertical-tabset">
+                <lightning-tab label="RMA Details" class="vertical-tab">
+                <!-- <div class="slds-text-longform">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <div>
+                                    <div>                                    
+                                        Dealer Email : 
+                                    </div>
+                                    <div>
+                                        {Account.Name}
+                                    </div>                                               
                                 </div>
                                 <div>
-                                    {Account.Name}
-                                </div>                                               
-                            </div>
-                            <div>
-                                Kumar
-                            </div>
-                            <div>
-                                Nikhil
-                            </div>
-                            <div>
-                                Kumar
-                            </div>                           
-                        </div>
-                        <div class="slds-col">
-                            <div>
-                                Nikhil
-                            </div>
-                            <div>
-                                Kumar
-                            </div>
-                            <div>
-                                Nikhil
-                            </div>
-                            <div>
-                                Kumar
-                            </div>
-                        </div>
-                    </div>                                   
-                </div> -->
-                <lightning-layout multiple-rows>
-                    <template for:each={fieldsetsdata.Field_set_1} for:item="rec" for:index="indx">
-                            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small" key={rec.Field}>
-                                <div class="header-column">
-                                    <p class="field-title" title={rec.Field}>{rec.Field}</p>
-                                    <p>{rec.Value}</p>
+                                    Kumar
                                 </div>
-                            </lightning-layout-item>
-                    </template>                    
-                </lightning-layout>            
-            </lightning-tab>
-            <lightning-tab label="Replacement Details">
-                <lightning-layout multiple-rows>
-                    <template for:each={fieldsetsdata.Field_set_2} for:item="rec" for:index="indx">
-                            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small" key={rec.Field}>
-                                <div class="header-column">
-                                    <p class="field-title" title={rec.Field}>{rec.Field}</p>
-                                    <p>{rec.Value}</p>
+                                <div>
+                                    Nikhil
                                 </div>
-                            </lightning-layout-item>
-                    </template>                    
-                </lightning-layout>  
-            </lightning-tab>
-            <lightning-tab label="Return Details">
-                <lightning-layout multiple-rows>
-                    <template for:each={fieldsetsdata.Field_set_3} for:item="rec" for:index="indx">
-                            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small" key={rec.Field}>
-                                <div class="header-column">
-                                    <p class="field-title" title={rec.Field}>{rec.Field}</p>
-                                    <p>{rec.Value}</p>
+                                <div>
+                                    Kumar
+                                </div>                           
+                            </div>
+                            <div class="slds-col">
+                                <div>
+                                    Nikhil
                                 </div>
-                            </lightning-layout-item>
-                    </template>                    
-                </lightning-layout>  
-            </lightning-tab>
-            <lightning-tab label="Settlement Details">
-                <lightning-layout multiple-rows>
-                    <template for:each={fieldsetsdata.Field_set_4} for:item="rec" for:index="indx">
-                            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small" key={rec.Field}>
-                                <div class="header-column">
-                                    <p class="field-title" title={rec.Field}>{rec.Field}</p>
-                                    <p>{rec.Value}</p>
+                                <div>
+                                    Kumar
                                 </div>
-                            </lightning-layout-item>
-                    </template>                    
-                </lightning-layout>                                    
-            </lightning-tab>
-        </lightning-tabset>
-    </template>
+                                <div>
+                                    Nikhil
+                                </div>
+                                <div>
+                                    Kumar
+                                </div>
+                            </div>
+                        </div>                                   
+                    </div> -->
+                    <lightning-layout multiple-rows>
+                        <template for:each={fieldsetsdata.Field_set_1} for:item="rec" for:index="indx">
+                                <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small" key={rec.Field}>
+                                    <div class="header-column">
+                                        <p class="field-title" title={rec.Field}>{rec.Field}</p>
+                                        <p class="field-value">{rec.Value}</p>
+                                    </div>
+                                </lightning-layout-item>
+                        </template>                    
+                    </lightning-layout>            
+                </lightning-tab>
+                <lightning-tab label="Replacement Details">
+                    <lightning-layout multiple-rows>
+                        <template for:each={fieldsetsdata.Field_set_2} for:item="rec" for:index="indx">
+                                <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small" key={rec.Field}>
+                                    <div class="header-column">
+                                        <p class="field-title" title={rec.Field}>{rec.Field}</p>
+                                        <p class="field-value">{rec.Value}</p>
+                                    </div>
+                                </lightning-layout-item>
+                        </template>                    
+                    </lightning-layout>  
+                </lightning-tab>
+                <lightning-tab label="Return Details">
+                    <lightning-layout multiple-rows>
+                        <template for:each={fieldsetsdata.Field_set_3} for:item="rec" for:index="indx">
+                                <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small" key={rec.Field}>
+                                    <div class="header-column">
+                                        <p class="field-title" title={rec.Field}>{rec.Field}</p>
+                                        <p class="field-value">{rec.Value}</p>
+                                    </div>
+                                </lightning-layout-item>
+                        </template>                    
+                    </lightning-layout>  
+                </lightning-tab>
+                <lightning-tab label="Settlement Details">
+                    <lightning-layout multiple-rows>
+                        <template for:each={fieldsetsdata.Field_set_4} for:item="rec" for:index="indx">
+                                <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small" key={rec.Field}>
+                                    <div class="header-column">
+                                        <p class="field-title" title={rec.Field}>{rec.Field}</p>
+                                        <p class="field-value">{rec.Value}</p>
+                                    </div>
+                                </lightning-layout-item>
+                        </template>                    
+                    </lightning-layout>                                    
+                </lightning-tab>
+            </lightning-tabset>
+        </template>        
+    </div>
   <!--  <div>
             <section role="dialog" tabindex="-1"
                     aria-labelledby="modal-heading-01"
