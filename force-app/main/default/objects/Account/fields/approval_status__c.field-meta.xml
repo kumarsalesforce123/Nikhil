@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>approval_status__c</fullName>
+    <externalId>false</externalId>
+    <label>approval status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>submitted for approval</fullName>
+                <default>false</default>
+                <label>submitted for approval</label>
+            </value>
+            <value>
+                <fullName>approved</fullName>
+                <default>false</default>
+                <label>approved</label>
+            </value>
+            <value>
+                <fullName>rejected</fullName>
+                <default>false</default>
+                <label>rejected</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

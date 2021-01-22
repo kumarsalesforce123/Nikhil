@@ -52,6 +52,7 @@ public with sharing class AccountHelper {
         List<string> FieldSetNames= new List<string>{'Field_set_1','Field_set_2','Field_set_3','Field_set_4'}; 
         Map<string,object> AccountFieldSetSchema = new Map<string,object>();
         Map<string,object> AccountFieldSets = new Map<string,object>();
+        Map<string,object> AccountFieldApiInfo = new Map<string,object>();
         set<string> fieldApis = new set<string>();
         for(integer i=0; i < FieldSetNames.size(); i++){
             List<Schema.FieldSetMember> fieldSetMembers = ((SObject)Type.forName('account').newInstance()).getSObjectType().getDescribe().FieldSets.getMap().get(FieldSetNames[i]).getFields();
@@ -63,6 +64,7 @@ public with sharing class AccountHelper {
                 fields.add(fieldSetField);
                 fieldApiNames.add(fieldSetField.apiName);
                 fieldApis.add(fieldSetField.apiName);
+                AccountFieldApiInfo.put(fieldSetField.apiName,fieldSetField);
             }
             AccountFieldSetSchema.put(FieldSetNames[i], fields);
             AccountFieldSets.put(FieldSetNames[i], fieldApiNames);
@@ -70,7 +72,8 @@ public with sharing class AccountHelper {
         return new Map<string,object>{
             'AccountFieldSetSchema' => AccountFieldSetSchema,
             'AccountFieldSets' => AccountFieldSets,
-            'fieldApis' => fieldApis
+            'fieldApis' => fieldApis,
+            'AccountFieldApiInfo' => AccountFieldApiInfo
         };     
     }
     

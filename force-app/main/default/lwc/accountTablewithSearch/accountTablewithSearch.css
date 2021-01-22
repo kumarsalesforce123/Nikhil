@@ -14,12 +14,13 @@ h1 {
 }
 
 .button-wrapper {
-    display: flex;
     width: 100%;
-    justify-content: space-between;
+    /*display: flex;    
+    justify-content: space-between;*/
 }
 .filter-button {
-    min-width: 160px;
+    /*min-width: 160px;*/
+    width: 100%;
     color: #b0adab;
     border-color: #b0adab;
 }
@@ -33,3 +34,28 @@ h1 {
     border-color: #ffb100;
     color: #ffb100;
 }
+/*c-rma-view .slds-vertical-tabs__nav-item.slds-is-active .slds-vertical-tabs__link,
+c-rma-view .slds-vertical-tabs__nav-item.slds-is-active .slds-vertical-tabs__link:hover {    
+    color: #000;
+    font-weight: bolder;
+}
+c-rma-view .slds-vertical-tabs__nav-item.slds-has-focus {
+    text-decoration: none !important;
+}
+c-rma-view .slds-vertical-tabs__nav {
+    min-height: 70vh;
+}
+/*c-rma-view lightning-tab-bar ul {
+    min-height: 70vh !important;
+}*/
+/*c-rma-view .slds-vertical-tabs__nav-item.slds-is-active {    
+    color: #000 !important;
+}
+
+c-rma-view .field-value {
+    font-weight: bolder;
+}
+c-rma-view .vertical-nav a {
+    text-decoration: none !important;
+    color: #000 !important;
+}*/
