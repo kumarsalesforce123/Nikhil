@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>no_of_hours__c</fullName>
+    <externalId>false</externalId>
+    <label>no of hours</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>type__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>5</fullName>
+                <default>false</default>
+                <label>5</label>
+            </value>
+            <value>
+                <fullName>10</fullName>
+                <default>false</default>
+                <label>10</label>
+            </value>
+            <value>
+                <fullName>15</fullName>
+                <default>false</default>
+                <label>15</label>
+            </value>
+            <value>
+                <fullName>20</fullName>
+                <default>false</default>
+                <label>20</label>
+            </value>
+            <value>
+                <fullName>30</fullName>
+                <default>false</default>
+                <label>30</label>
+            </value>
+            <value>
+                <fullName>40</fullName>
+                <default>false</default>
+                <label>40</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>full time</controllingFieldValue>
+            <controllingFieldValue>contract</controllingFieldValue>
+            <valueName>30</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>full time</controllingFieldValue>
+            <controllingFieldValue>contract</controllingFieldValue>
+            <valueName>40</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>part time</controllingFieldValue>
+            <controllingFieldValue>contract</controllingFieldValue>
+            <valueName>5</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>part time</controllingFieldValue>
+            <controllingFieldValue>contract</controllingFieldValue>
+            <valueName>10</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>part time</controllingFieldValue>
+            <controllingFieldValue>contract</controllingFieldValue>
+            <valueName>15</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>part time</controllingFieldValue>
+            <controllingFieldValue>contract</controllingFieldValue>
+            <valueName>20</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

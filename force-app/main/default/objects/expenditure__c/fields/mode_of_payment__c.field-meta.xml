@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>mode_of_payment__c</fullName>
+    <externalId>false</externalId>
+    <label>mode of payment</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>cash</fullName>
+                <default>false</default>
+                <label>cash</label>
+            </value>
+            <value>
+                <fullName>check</fullName>
+                <default>false</default>
+                <label>check</label>
+            </value>
+            <value>
+                <fullName>credit</fullName>
+                <default>false</default>
+                <label>credit</label>
+            </value>
+            <value>
+                <fullName>debit</fullName>
+                <default>false</default>
+                <label>debit</label>
+            </value>
+            <value>
+                <fullName>loan</fullName>
+                <default>false</default>
+                <label>loan</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

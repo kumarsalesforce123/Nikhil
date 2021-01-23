@@ -1,0 +1,89 @@
+.field-value {
+    font-weight: bolder;
+}
+/*:host .slds-vertical-tabs__nav-item.slds-has-focus {
+    text-decoration: none !important;
+}
+:host .slds-vertical-tabs__nav {
+    min-height: 70vh;
+}
+:host lightning-tab-bar ul {
+    min-height: 70vh !important;
+}
+:host .slds-vertical-tabs__nav-item.slds-is-active {    
+    color: #000 !important;
+}
+
+:host .field-value {
+    font-weight: bolder;
+}
+:host .vertical-nav a {
+    text-decoration: none !important;
+    color: #000 !important;
+
+}*/
+/*
+:host {
+    background-color: rgb(253, 98, 98) !important;
+}
+
+
+
+:host div.slds-vertical-tabs {
+    background-color: red !important;
+}
+.c-continer {
+    border: 1px solid red;
+    background-color: green;
+}
+.c-continer .vertical-nav{
+    border: 1px solid green;
+    background-color: red;
+}*/
+/*
+.c-continer lightning-tabset {
+    background-color: red;
+    background-color: red !important;
+}
+
+.c-continer lightning-tabset .slds-vertical-tabs {
+    background-color: red;
+    background-color: red !important;
+}
+
+.field-value {
+    font-weight: bolder;
+}
+lightning-tabset {
+    height: 900px;
+}
+lightning-tabset .slds-vertical-tabs {
+    height: 900px;
+}
+lightning-tabset .slds-vertical-tabs {
+    height: 70vh;
+}
+lightning-tab-bar {
+    height: 70vh;
+}
+:host lightning-tab-bar {
+    height: 70vh;
+}
+:host() lightning-tab-bar {
+    height: 70vh;
+}
+lightning-tab-bar ul{
+    height: 70vh;
+}
+ul a {
+    text-decoration: none !important;
+    color: black !important;
+}
+.c-continer::part('slds-vertical-tabs__nav')
+{
+    height: 70vh;
+}
+lightning-tab::part('slds-vertical-tabs__nav')
+{
+    height: 70vh;
+}*/
