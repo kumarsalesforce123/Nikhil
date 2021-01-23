@@ -11,9 +11,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>submitted for approval</fullName>
+                <fullName>SFA</fullName>
                 <default>false</default>
-                <label>submitted for approval</label>
+                <label>SFA</label>
             </value>
             <value>
                 <fullName>approved</fullName>
