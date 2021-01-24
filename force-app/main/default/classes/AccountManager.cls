@@ -1,6 +1,6 @@
 @RestResource(urlMapping='/Accounts/*/contacts')
 global class AccountManager {
-    // Adding the Comments by nikhil
+    // Adding the Comments by nikhil kumar
     @HttpGet
     global static Account getAccount() {
         RestRequest req = RestContext.request;
