@@ -1,7 +1,40 @@
 <!-- This component will get the list of contacts from data base    -->
 <template>
-    <lightning-card title="ApexWireMethodToProperty" icon-name="custom:custom63">
+		Nikhil
+    <lightning-card title="contacts List">
         <div class="slds-m-around_medium">
+            <template if:true={contacts}>
+                <template for:each={contacts} for:item="contact">
+                    <div class="slds-p-around_medium" key={contact.Id}>
+                        <ul class="slds-has-dividers_bottom-space">
+                            <li class="slds-item">
+                                <lightning-tile label={contact.Name} type="media">
+                                    <lightning-icon slot="media" icon-name="standard:groups" size="small"></lightning-icon>
+                                    <ul class="slds-list_horizontal slds-has-dividers_right">
+                                        <li class="slds-item"><b>Title</b></li>
+                                        <li class="slds-item">{contact.Title}</li>
+                                    </ul>
+                                    <ul class="slds-list_horizontal slds-has-dividers_right">
+                                        <li class="slds-item"><b>Phone</b></li>
+                                        <li class="slds-item">{contact.Phone}</li>
+                                    </ul>
+                                    <ul class="slds-list_horizontal slds-has-dividers_right">
+                                        <li class="slds-item"><b>Email</b></li>
+                                        <li class="slds-item">{contact.Email}</li>
+                                    </ul>
+                                    <ul class="slds-list_horizontal slds-has-dividers_right">
+                                        <li class="slds-item"><b>Account Type</b></li>
+                                        <li class="slds-item" if:true={contact.Account}>{contact.Account.Type}</li>
+                                    </ul>
+                                </lightning-tile>
+                            </li>
+                        </ul>
+                    </div>
+                   <!-- <p key={contact.Id}>{contact.Id}   {contact.Name}: {contact.Account ? contact.Account.Type}</p>-->
+                </template>
+            </template>            
+        </div>
+        <!--<div class="slds-m-around_medium">
             <template if:true={contacts.data}>
                 <template for:each={contacts.data} for:item="contact">
                     <p key={contact.Id}>{contact.Id}   {contact.Name}</p>
@@ -10,6 +43,6 @@
             <template if:true={contacts.error}>
                 <c-error-panel errors={contacts.error}></c-error-panel>
             </template>
-        </div>
-    </lightning-card>
+        </div>  -->
+    </lightning-card>  
 </template>

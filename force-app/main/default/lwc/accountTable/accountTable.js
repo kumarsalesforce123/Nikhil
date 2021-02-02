@@ -8,7 +8,7 @@ const actions = [
 ];
 
 export default class LightningDatatableLWCExample extends LightningElement {
-columns = [{
+    columns = [{
             label: 'Account Name',
             fieldName: 'Name',
             type: 'text',
@@ -51,167 +51,152 @@ columns = [{
             }
         },
     ];
-    @track accData ;
-    @track allAccounts = [];
-    @track ProspectList = [];
-    @track CustomerList = [];
-    allAccountsCount = 0;
-    allProspectCount = 0;
-    allCustomerCount = 0;
-    activeFilter ='';
-    searchString = '';
-    @track ShowRMAModal = false;
-    @track ShowcaseModal = false;
-    @track Account;
-    @track isLoaded = false;
-   
+
+    @api accountData = [];
+    allAccountData = [];
+    prospectCount = 0;
+    cdCount = 0;
+    ccCount = 0;
+    cprCount = 0;
+    otherCount = 0;
+    @api isLoaded = false;
+    @api ShowRMAModal = false;
+    @api ShowCaseModal = false;
+    activeFilter = '';
+    searchString = '';v
+    messageToDispaly = '';
 
     @wire(getAccountList)
-    wiredAccounts({error,data}) 
+    getAccountData({error,data})
     {
-        if (data){  
-            console.log('Nikhil kumar' + data);                               
-            this.accData = data;
-            this.allAccounts = data;
-            this.ProspectList = this.accData.filter(this.ProspectFilter);
-            this.CustomerList = this.accData.filter(this.CustomerFilter);
+        if (data){
             this.activeFilter ='';
-            this.allAccountsCount = 'All - ' + this.allAccounts.length;
-            this.allProspectCount = 'Prospect - ' + this.ProspectList.length;
-            this.allCustomerCount = 'Customers - ' + this.CustomerList.length;
+            this.accountData = data;
+            this.allAccountData = this.accountData;
+            this.prospectCount = this.allAccountData.filter(this.typeFilter,'Prospect').length;
+            this.cdCount = this.allAccountData.filter(this.typeFilter,'Customer - Direct').length;
+            this.ccCount = this.allAccountData.filter(this.typeFilter,'Customer - Channel').length;
+            this.cprCount = this.allAccountData.filter(this.typeFilter,'Channel Partner / Reseller').length;
+            this.otherOrderCount = this.allAccountData.filter(this.typeFilter,'Other').length;
+            this.isLoaded = !this.isLoaded;
+            if(data.length === 0){
+                this.messageToDispaly = 'No Return Material Authorization to display' ;
+            }
         } else if (error) {
             console.error(error);
         }
     }
-    ProspectFilter(item)
-    {
-        if (item.Type === 'Prospect') 
-            return true;          
-        return false;
+    // Filter the data with RMA Milestone
+    typeFilter(item){
+        return  (item.Type === this)? true:false;
     }
-    CustomerFilter(item)
-    {
-        if (item.Type === 'Customer - Direct') 
-            return true;          
-        return false;
+    // Method to handle the button click
+    filterByType(evnt){
+        if(evnt.currentTarget && evnt.currentTarget.dataset && evnt.currentTarget.dataset.type){
+            var FilterType = evnt.currentTarget.dataset.type;
+            this.activeFilter = FilterType;
+            this.accountData = this.allAccountData.filter(this.typeFilter,FilterType);
+        }
+        else{
+            this.activeFilter = '';
+            this.accountData = this.allAccountData;
+        }
+        this.searchString = '';
+        if(this.accountData.length === 0){
+            this.messageToDispaly = 'No Accounts to display' ;
+        }
     }
-    allAccountsData(){
-        this.activeFilter ='';
-        this.accData = this.allAccounts;
-    }
-    allProspectsData(){
-        this.activeFilter ='Prospect';
-        this.accData = this.ProspectList;
-    }
-    allCustomersData(){
-        this.activeFilter ='Customer - Direct';
-        this.accData = this.CustomerList;
-    }
-    handleSearchInputChange(evnt)
-    {     
+    // Method to handle the search
+    handleSearchInputChange(evnt){
         this.searchString = evnt.target.value;
-        console.log(this.searchString);
-        let data = [];
-        if(this.activeFilter && (this.activeFilter ==='Prospect' || this.activeFilter === 'Customer - Direct'))
-        {
-            if(this.activeFilter ==='Prospect')
-                data = this.ProspectList;
-            else if(this.activeFilter === 'Customer - Direct')
-                data= this.CustomerList;
+        let data = this.allAccountData;
+        if(this.activeFilter)
+            data = this.allAccountData.filter(this.typeFilter,this.activeFilter);
+
+        if(this.searchString.length >= 3){
+            this.accountData = data.filter(this.rmaSearchFilter,this.searchString);
         }
-        else
-        {
-            data = this.allAccounts;
+        else{
+            this.accountData = data;
         }
-        if(this.searchString)
-        {
-            this.accData = data.filter(this.accountSearchFilter,this.searchString);
+        if(this.accountData.length === 0){
+            this.messageToDispaly = 'No results found, please refine your search.' ;
         }
-        else
-            this.accData = data;
     }
-    accountSearchFilter(item){
+    rmaSearchFilter(item){
         let searchString = this.toLowerCase();
-        if((item.Name.toLowerCase().includes(searchString)) || (item.Type && item.Type.toLowerCase().includes(searchString)) 
+        if((item.Name && item.Name.toLowerCase().includes(searchString)) || (item.AnnualRevenue && item.AnnualRevenue.toString().includes(searchString)) || (item.Type && item.Type.toLowerCase().includes(searchString)) 
             || (item.Phone && item.Phone.toLowerCase().includes(searchString)) || (item.Website && item.Website.toLowerCase().includes(searchString)) 
-            || (item.Rating && item.Rating.toLowerCase().includes(searchString)) || (item.AnnualRevenue && item.AnnualRevenue.toString().includes(searchString)))
+            || (item.Rating && item.Rating.toLowerCase().includes(searchString)))
             return true;
         return false;
     }
-
+    // Method to handle the sort of RMA status
+    handleSortdata(event) {
+        this.sortBy = event.detail.fieldName;
+        this.sortDirection = event.detail.sortDirection;
+        this.sortData(event.detail.fieldName, event.detail.sortDirection);
+    }
+    sortData(fieldname, direction) {
+        let parseData = JSON.parse(JSON.stringify(this.accountData));
+        let keyValue = (a) => {
+            return a[fieldname];
+        };
+        let isReverse = direction === 'asc' ? 1: -1;
+        parseData.sort((x, y) => {
+            x = keyValue(x) ? keyValue(x) : '';
+            y = keyValue(y) ? keyValue(y) : '';
+            return isReverse * ((x > y) - (y > x));
+        });
+        this.accountData = parseData;
+    }
+    // Methos to handle the actions of data table
     handleRowAction(event) {
         const actionName = event.detail.action.name;
         const row = event.detail.row;
         switch (actionName) {
             case 'rma_details':
-                this.viewrmadetails(row);
+                this.viewRMADetails(row);
                 break;
             case 'case_details':
-                this.viewcasedetails(row);
+                this.viewCaseDetails(row);
                 break;
             default:
         }
     }
-
-    @track AccId;
-    @track rmaDetails = [];
-    @track replacementDetails = [];
-    @track returnDetails = [];
-    @track settlementDetails = [];
-
-    @wire(wrpapper, { Id : '$AccId' })
-    wrappedAccount({error,data}) 
-    {
-        if (data){   
-            this.rmaDetails = data.filter(this.tabSection);
-            this.replacementDetails = data.filter(this.tabSection);
-            this.returnDetails = data.filter(this.tabSection);
-            this.settlementDetails = data.filter(this.tabSection);
-        }
+    viewRMADetails(row){
+        this.ShowRMAModal = true;
+        
     }
-
-    tabSection(item)
-    {
-        if (item.fieldSetName === 'Field_set_1') {
-            return true; 
-        }
-        else if(item.fieldSetName === 'Field_set_2'){
-            return true;
-        }
-        else if(item.fieldSetName === 'f'){
-            return true;
-        }
-        else if(item.fieldSetName === 'ff'){
-            return true;
-        }                    
-        return false;
-    }
-    
-    viewrmadetails(row) {
-        this.ShowRMAModal = true;       
-        this.AccId = row.Id;
-        this.Account = row;
-
-    }
-
-    viewcasedetails(row) {
-        this.Account = row;
-        this.ShowcaseModal = true;
+    viewCaseDetails(row){
+        
+        this.ShowCaseModal = true;
+        
     }
     closeModal() {
         this.ShowRMAModal = false;
-        this.ShowcaseModal = false;
+        this.ShowCaseModal = false;
     }
-    saveMethod(event) {
-            this.template.querySelector('.slds-show').classList.add('slds-hide');
-            this.template.querySelector('.slds-show').classList.remove('slds-show');
-            this.template.querySelector('.slds-is-active').classList.remove('slds-is-active');    
-            var y=event.target.parentElement;
-            y.classList.add('slds-is-active');            
-            var x=event.target.id;
-            let target = this.template.querySelector(`[aria-labelledby="${x}"]`);   
-            target.classList.remove('slds-hide');
-            target.classList.add('slds-show');
+    // Method to handle the Export all
+    exportData(){
+      //  this.template.querySelector("c-export-excel").downloadCSVFile(this.allAccountData, 'RMAs', this.fieldMap);
     }
-
+    get allFilterButtonClass(){
+        return !this.activeFilter ? 'slds-button slds-button_neutral filter-button filter-button-active' : 'slds-button slds-button_neutral filter-button';
+    }
+     get bookedFilterButtonClass(){
+        return(this.activeFilter && this.activeFilter === 'Prospect') ? 'slds-button slds-button_neutral filter-button filter-button-active' : 'slds-button slds-button_neutral filter-button';
+    }
+    get toShipFilterButtonClass(){
+        return (this.activeFilter && this.activeFilter === 'Customer - Direct') ? 'slds-button slds-button_neutral filter-button filter-button-active' : 'slds-button slds-button_neutral filter-button';
+    }
+    get deliverFilterButtonClass(){
+        return (this.activeFilter && this.activeFilter === 'Customer - Channel') ? 'slds-button slds-button_neutral filter-button filter-button-active' : 'slds-button slds-button_neutral filter-button';
+    }
+    get toReturnFilterButtonClass(){
+        return (this.activeFilter && this.activeFilter === 'Channel Partner / Reseller') ? 'slds-button slds-button_neutral filter-button filter-button-active' : 'slds-button slds-button_neutral filter-button';
+    }
+    get otherFilterButtonClass(){
+        return (this.activeFilter && this.activeFilter === 'Other') ? 'slds-button slds-button_neutral filter-button filter-button-active' : 'slds-button slds-button_neutral filter-button';
+    }
 }

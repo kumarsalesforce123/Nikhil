@@ -3,7 +3,7 @@
         <div class="slds-align_absolute-center">
             <h1>RMA-V2</h1>
         </div>
-        <div class = "slds-box slds-p-around_medium slds-m-around_medium">
+        <div class = "slds-box slds-p-around_medium slds-m-around_medium AccListTableFilter">
             <div>
                 <lightning-layout vertical-align="end" multiple-rows>
                     <lightning-layout-item size="12" small-device-size="12" medium-device-size="10" large-device-size="10" padding="around-small">
@@ -60,14 +60,14 @@
                 <lightning-button variant="brand-outline" label={allCustomerCount} onclick={allCustomersData}></lightning-button>
             </lightning-button-group>
         </div>-->
-            <div>
+            <div class="AccListTable">
                 <template if:true={accData.length}>
                     <lightning-datatable data={accData} 
                         columns={columns} 
                         key-field="Id" 
                         hide-checkbox-column
                         onrowaction={handleRowAction}
-                        class="slds-table_cell-buffer slds-table_striped">
+                        class="slds-table_cell-buffer slds-table_striped AccListDataTable">
                     </lightning-datatable>
                 </template>
                 <template if:false={accData.length}>
