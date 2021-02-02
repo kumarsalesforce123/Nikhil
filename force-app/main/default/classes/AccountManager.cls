@@ -1,5 +1,4 @@
 @RestResource(urlMapping='/Accounts/*/contacts')
-// Adding the comments
 global class AccountManager {
     @HttpGet
     global static Account getAccount() {
