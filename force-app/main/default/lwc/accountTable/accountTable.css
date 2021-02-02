@@ -1,14 +1,30 @@
-h1 {
-    font-size: xx-large;
+.button-wrapper {
+    width: 100%;
 }
-.button-height{
-    height:5rem;
+.export-button{
+    width: 100%;
 }
-.table-border{
-    padding: 30px;
+.filter-button {
+    width: 100%;
+    color: #b0adab;
+    border-color: #b0adab;
 }
-.slds-modal__container {
-    height : auto;  
-    max-width: 80rem !important;
-    width: 80% !important;
+.filter-button div {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.filter-button-active {
+    background-color: #fff7e5;
+    border-color: #ffb100;
+    color: #ffb100;
+}
+.data-table{
+    padding-top: 2%; 
+    padding-bottom: 2%; 
+    max-height: 500px; 
+    overflow-y: auto;
+}
+.loading-height{
+    height:6rem;
 }

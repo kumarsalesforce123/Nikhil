@@ -1,298 +1,140 @@
-<template>
-    <lightning-card  title="" >
-        <div class="slds-align_absolute-center">
-            <h1>RMA</h1>
-        </div>
-        <div class = "table-border">
-            <div class="slds-p-around_medium">
-                <lightning-input type="text" label= "Search" onchange={handleSearchInputChange}></lightning-input>
-            </div> 
-            <div>
-                <lightning-button-group class="slds-align_absolute-center button-height">
-                    <lightning-button variant="brand-outline" label={allAccountsCount} onclick={allAccountsData} class = "slds-badge_lightest"></lightning-button>
-                    <lightning-button variant="brand-outline" label={allProspectCount} onclick={allProspectsData}></lightning-button>
-                    <lightning-button variant="brand-outline" label={allCustomerCount} onclick={allCustomersData}></lightning-button>
-                </lightning-button-group>
-            </div>
-            <div>
-                <template if:true={accData}>
-                    <lightning-datatable data={accData} 
-                        columns={columns} 
-                        key-field="Id" 
-                        hide-checkbox-column
-                        onrowaction={handleRowAction}>
-                    </lightning-datatable>
-                </template>
-            </div>
-        </div>
-        <!-- Code for View Case-->
-        <div>
-            <template if:true={ShowcaseModal}>
-                <section role="dialog" tabindex="-1"
-                        aria-labelledby="modal-heading-01"
-                        aria-modal="true"
-                        aria-describedby="modal-content-id-1"
-                        class="slds-modal slds-fade-in-open"
-                        enable-infinite-loading={isLoaded}>
-                <div class="slds-modal__container">
-                    <!-- modal header -->
-                    <header class="slds-modal__header">
-                        <h1>Account : {Account.Name}</h1>
-                    </header>
-                    <!-- modal body -->
-                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id">
-                        Case view Section
-                    </div>
-                    <!-- modal footer start-->
-                    <footer class="slds-modal__footer">
-                        <lightning-button variant="brand"
-                                        label="Close"
-                                        title="Close"
-                                        onclick={closeModal}></lightning-button>
-                    </footer>
-                </div>
-                </section>
-                <div class="slds-backdrop slds-backdrop_open"></div>
-            
-            </template>
-        </div>
-        <!-- Code for View RMA-->
-        <div>
-            <template if:true={ShowRMAModal}>
-                <section role="dialog" tabindex="-1"
-                        aria-labelledby="modal-heading-01"
-                        aria-modal="true"
-                        aria-describedby="modal-content-id-1"
-                        class="slds-modal slds-fade-in-open">
-                <div class="slds-modal__container">
-                    <!-- modal header -->
-                    <header class="slds-modal__header">
-                        <h1>Account : {Account.Name}</h1>
-                    </header>
-                    <!-- modal body -->
-                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                        <div class="slds-vertical-tabs">
-                            <ul class="slds-vertical-tabs__nav" role="tablist" aria-orientation="vertical">
-                                <li class="slds-vertical-tabs__nav-item slds-is-active" title="Tab 1" role="presentation">
-                                    <a class="slds-vertical-tabs__link" href="javascript:void(0)"  onclick={saveMethod}  role="tab" tabindex="0"
-                                        aria-selected="true" aria-controls="slds-vertical-tabs-0" id="slds-vertical-tabs-0__nav">
-                                        <span class="slds-vertical-tabs__left-icon"></span>
-                                        <span class="slds-truncate" title="RMA Details">RMA Details</span>
-                                        <span class="slds-vertical-tabs__right-icon"></span>
-                                    </a>
-                                </li>
-                                <li class="slds-vertical-tabs__nav-item" title="Tab 2" role="presentation">
-                                    <a class="slds-vertical-tabs__link" href="javascript:void(0)" onclick={saveMethod} role="tab" tabindex="-1"
-                                        aria-selected="false" aria-controls="slds-vertical-tabs-1" id="slds-vertical-tabs-1__nav">
-                                        <span class="slds-vertical-tabs__left-icon"></span>
-                                        <span class="slds-truncate" title="Replacement Details">Replacement Details</span>
-                                        <span class="slds-vertical-tabs__right-icon"></span>
-                                    </a>
-                                </li>
-                                <li class="slds-vertical-tabs__nav-item" title="Tab" role="presentation">
-                                    <a class="slds-vertical-tabs__link" href="javascript:void(0)"  onclick={saveMethod} role="tab" tabindex="-1"
-                                        aria-selected="false" aria-controls="slds-vertical-tabs-2" id="slds-vertical-tabs-2__nav">
-                                        <span class="slds-vertical-tabs__left-icon"></span>
-                                        <span class="slds-truncate" title="Return Details">Return Details</span>
-                                        <span class="slds-vertical-tabs__right-icon"></span>
-                                    </a>
-                                </li>
-                                <li class="slds-vertical-tabs__nav-item" title="Tab 3" role="presentation">
-                                <a class="slds-vertical-tabs__link" href="javascript:void(0)"  onclick={saveMethod} role="tab" tabindex="-1"
-                                    aria-selected="false" aria-controls="slds-vertical-tabs-3" id="slds-vertical-tabs-3__nav">
-                                    <span class="slds-vertical-tabs__left-icon"></span>
-                                    <span class="slds-truncate" title="Settlement Details">Settlement Details</span>
-                                    <span class="slds-vertical-tabs__right-icon"></span>
-                                </a>
-                            </li>
-                            </ul>
-                            <div class="slds-vertical-tabs__content slds-show" id="slds-vertical-tabs-0" role="tabpanel"
-                                aria-labelledby="slds-vertical-tabs-0__nav">
-                                <div class="slds-text-longform">
-                                    <div class="slds-grid slds-gutters">
-                                        <div class="slds-col">
-                                            
-                                        </div>
-                                        <div class="slds-col">
-                                            
-                                        </div>
-                                    </div>                                   
-                                </div>
-                            </div>
-                            <div class="slds-vertical-tabs__content slds-hide" id="slds-vertical-tabs-1" role="tabpanel"
-                                aria-labelledby="slds-vertical-tabs-1__nav">
-                                <div class="slds-text-longform">
-                                    <div class="slds-grid slds-gutters">
-                                        <div class="slds-col">
-                                            <div>
-                                                Dealer Email : {Account.Name}
-                                            </div>
-                                            <div>
-                                                Kumar
-                                            </div>
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                            <div>
-                                                Kumar
-                                            </div>
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                            <div>
-                                                Kumar
-                                            </div>
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                        </div>
-                                        <div class="slds-col">
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                            <div>
-                                                Kumar
-                                            </div>
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                            <div>
-                                                Kumar
-                                            </div>
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                            <div>
-                                                Kumar
-                                            </div>
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="slds-vertical-tabs__content slds-hide" id="slds-vertical-tabs-2" role="tabpanel"
-                                aria-labelledby="slds-vertical-tabs-2__nav">
-                                <div class="slds-text-longform">
-                                    <div class="slds-grid slds-gutters">
-                                        <div class="slds-col">
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                            <div>
-                                                Kumar
-                                            </div>
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                            <div>
-                                                Kumar
-                                            </div>
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                            <div>
-                                                Kumar
-                                            </div>
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                        </div>
-                                        <div class="slds-col">
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                            <div>
-                                                Kumar
-                                            </div>
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                            <div>
-                                                Kumar
-                                            </div>
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                            <div>
-                                                Kumar
-                                            </div>
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="slds-vertical-tabs__content slds-hide" id="slds-vertical-tabs-3" role="tabpanel"
-                                aria-labelledby="slds-vertical-tabs-3__nav">
-                                <div class="slds-text-longform">
-                                    <div class="slds-grid slds-gutters">
-                                        <div class="slds-col">
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                            <div>
-                                                Kumar
-                                            </div>
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                            <div>
-                                                Kumar
-                                            </div>
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                            <div>
-                                                Kumar
-                                            </div>
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                        </div>
-                                        <div class="slds-col">
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                            <div>
-                                                Kumar
-                                            </div>
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                            <div>
-                                                Kumar
-                                            </div>
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                            <div>
-                                                Kumar
-                                            </div>
-                                            <div>
-                                                Nikhil
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div> 
-                    <!-- modal footer start-->
-                    <footer class="slds-modal__footer">
-                        <lightning-button variant="brand"
-                                        label="Close"
-                                        title="Close"
-                                        onclick={closeModal}></lightning-button>
-                    </footer>
-                </div>
-                </section>
-                <div class="slds-backdrop slds-backdrop_open"></div>
-            
-            </template>
-        </div>
-    </lightning-card> 
+<template>		
+	<div>
+		<br/>
+		<lightning-layout multiple-rows="true" vertical-align="center">
+			<!-- Heading start here-->
+			<lightning-layout-item size="12">
+				<div class="slds-text-heading_large slds-align_absolute-center">Account</div>	
+			</lightning-layout-item>
+			<!-- Heading end here-->
+
+			<!-- Search and Export start here-->
+			<lightning-layout-item size="12">
+				<br/>	
+				<lightning-layout multiple-rows="true">	
+					<lightning-layout-item size="1"></lightning-layout-item>
+					<lightning-layout-item size="8" padding="around-small">		
+						<lightning-input name="enter-search" placeholder="Search by Name, Type"
+							type="Search" value={searchString} onchange={handleSearchInputChange} >
+						</lightning-input>
+					</lightning-layout-item>
+					<lightning-layout-item size="2" padding="around-small">														
+						<button title="Export" type="button" class="slds-button slds-button_neutral export-button" onclick={exportData}>
+							<span>EXPORT ALL</span>
+						</button>					
+					</lightning-layout-item>  
+					<lightning-layout-item size="1"></lightning-layout-item>		
+				</lightning-layout>			
+			</lightning-layout-item>
+			<!-- Search and Export end here-->
+			
+			<!-- Buttons start here-->
+			<lightning-layout-item size="12">
+				<lightning-layout multiple-rows="true">
+					<lightning-layout-item size="1"></lightning-layout-item>
+					<lightning-layout-item size="10">
+						<div class="button-wrapper slds-m-vertical_large">       
+							<lightning-layout>
+								<lightning-layout-item flexibility="auto" padding="around-small">
+									<div>
+										<button title="All" onclick={filterByType} data-type="" class={allFilterButtonClass} type="button">
+												<div><span>All</span><span>{allAccountData.length}</span></div>
+										</button>
+									</div>
+								</lightning-layout-item>
+								<lightning-layout-item flexibility="auto" padding="around-small">
+									<div>
+										<button title="Prospect" name="Prospect" data-type="Prospect" onclick={filterByType} class={bookedFilterButtonClass} type="button">                                
+												<div><span>Prospect</span><span>{prospectCount}</span></div>                              
+										</button>
+									</div>
+								</lightning-layout-item>
+								<lightning-layout-item flexibility="auto" padding="around-small">
+									<div>                            
+										<button title="Customer - Direct" name="Customer - Direct" data-type="Customer - Direct" onclick={filterByType} class={toShipFilterButtonClass} type="button">
+											<div><span>Customer - Direct</span><span>{cdCount}</span></div>                                  
+										</button>
+									</div>
+								</lightning-layout-item>
+								<lightning-layout-item flexibility="auto" padding="around-small">
+									<div>
+										<button title="Customer - Channel" name="Customer - Channel" data-type="Customer - Channel" onclick={filterByType} type="button" class={deliverFilterButtonClass}>
+											<div><span>Customer - Channel</span><span>{ccCount}</span></div>
+										</button>
+									</div>
+								</lightning-layout-item>
+								<lightning-layout-item flexibility="auto" padding="around-small">
+									<div>
+										<button title="Channel Partner / Reseller" name="Channel Partner / Reseller" data-type="Channel Partner / Reseller" onclick={filterByType} type="button" class={toReturnFilterButtonClass}>
+											<div><span>Channel Partner / Reseller</span><span>{cprCount}</span></div>
+										</button>
+									</div>
+								</lightning-layout-item>
+								<lightning-layout-item flexibility="auto" padding="around-small">
+									<div>
+										<button title="Other" name="Other" data-type="Other" onclick={filterByType} type="button" class={otherFilterButtonClass}>
+											<div><span>Other</span><span>{otherCount}</span></div>
+										</button>
+									</div>
+								</lightning-layout-item>
+							</lightning-layout>
+						</div>
+					</lightning-layout-item>
+					<lightning-layout-item size="1"></lightning-layout-item>
+				</lightning-layout>
+			</lightning-layout-item>
+			<!-- Buttons end here-->
+
+			<!-- Data table start here-->
+			<lightning-layout-item size="1"></lightning-layout-item>
+			<lightning-layout-item size="10">				
+				<div if:false={isLoaded} class="slds-align_absolute-center loading-height">
+					<div role="status" class="slds-spinner slds-spinner_medium slds-spinner_inline slds-spinner_brand">
+						<span class="slds-assistive-text">Loading</span>
+						<div class="slds-spinner__dot-a"></div>
+						<div class="slds-spinner__dot-b"></div>
+					</div>
+				</div>
+				<div if:true={isLoaded} >
+					<div if:true={accountData.length} class = "data-table">
+						<lightning-datatable key-field="Id" 
+												data={accountData} 
+												columns={columns} 
+												hide-checkbox-column="true"
+												onrowaction={handleRowAction} 
+												default-sort-direction="desc"
+												sorted-by={sortBy}
+												sorted-direction={sortDirection}
+												onsort={handleSortdata}>
+						</lightning-datatable>
+					</div>	
+					<div if:false={accountData.length}>
+						<lightning-layout>
+							<lightning-layout-item size="12" padding="around-small">
+								<div class="slds-page-header">
+									<div class="slds-page-header__row">
+										<div class="slds-page-header__col-title slds-text-align_center noAccountData">
+											<strong>{messageToDispaly}</strong>
+										</div>
+									</div>
+								</div>
+							</lightning-layout-item>
+						</lightning-layout>
+					</div>										
+				</div>				
+			</lightning-layout-item>
+			<lightning-layout-item size="1"></lightning-layout-item>
+			<!-- Data table end here-->
+		</lightning-layout>		           
+	</div> 
+	<div>
+	<!-- Case View Modal -->
+	<template if:true={ShowCaseModal}>
+		Case View Modal
+	</template>
+	<!-- RMA View Modal -->
+	<template if:true={ShowRMAModal}>
+		RMA View Modal
+	</template>
+	</div>  
 </template>
