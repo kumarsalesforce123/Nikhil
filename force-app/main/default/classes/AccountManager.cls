@@ -1,3 +1,4 @@
+// This is a rest class
 @RestResource(urlMapping='/Accounts/*/contacts')
 global class AccountManager {
     @HttpGet
