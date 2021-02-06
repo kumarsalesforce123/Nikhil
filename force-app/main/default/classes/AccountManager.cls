@@ -1,4 +1,4 @@
-// This is a rest class by Nikhil Kumar Reddy Gurram
+// This is a rest class by Nikhil Kumar Reddy Gurram today
 @RestResource(urlMapping='/Accounts/*/contacts')
 global class AccountManager {
     @HttpGet
