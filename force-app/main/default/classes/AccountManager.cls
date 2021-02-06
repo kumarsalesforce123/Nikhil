@@ -1,4 +1,3 @@
-// This is a rest class by Nikhil Kumar Reddy Gurram
 @RestResource(urlMapping='/Accounts/*/contacts')
 global class AccountManager {
     @HttpGet
